@@ -19734,177 +19734,159 @@ div {
 </script>
 <script> var data = {
    "name":  "Query", 
-   "result": 0.307239,
-   "timing": 0.307239,
+   "result": 0.021954,
+   "timing": 0.021954,
+   "cardinality": 1,
    "extra-info": "SELECT\n    sum(l_extendedprice * l_discount) AS revenue\nFROM\n    lineitem\nWHERE\n    l_shipdate >= CAST('1994-01-01' AS date)\n    AND l_shipdate < CAST('1995-01-01' AS date)\n    AND l_discount BETWEEN 0.05\n    AND 0.07\n    AND l_quantity < 24;\n	\n\n", 
    "timings": [
    {
    "annotation": "optimizer", 
-   "timing": 0.006815
-   }
-,
+   "timing": 0.001765
+   },
    {
    "annotation": "optimizer > column_lifetime", 
-   "timing": 0.000030
-   }
-,
+   "timing": 0.000003
+   },
    {
    "annotation": "optimizer > common_aggregate", 
-   "timing": 0.000040
-   }
-,
+   "timing": 0.000002
+   },
    {
    "annotation": "optimizer > common_subexpressions", 
-   "timing": 0.000064
-   }
-,
+   "timing": 0.000004
+   },
    {
    "annotation": "optimizer > deliminator", 
-   "timing": 0.000003
-   }
-,
+   "timing": 0.000000
+   },
    {
    "annotation": "optimizer > expression_rewriter", 
-   "timing": 0.003548
-   }
-,
+   "timing": 0.001147
+   },
    {
    "annotation": "optimizer > filter_pullup", 
-   "timing": 0.000009
-   }
-,
+   "timing": 0.000001
+   },
    {
    "annotation": "optimizer > filter_pushdown", 
-   "timing": 0.002446
-   }
-,
+   "timing": 0.000539
+   },
    {
    "annotation": "optimizer > in_clause", 
-   "timing": 0.000019
-   }
-,
+   "timing": 0.000002
+   },
    {
    "annotation": "optimizer > join_order", 
-   "timing": 0.000051
-   }
-,
+   "timing": 0.000004
+   },
    {
    "annotation": "optimizer > regex_range", 
-   "timing": 0.000003
-   }
-,
+   "timing": 0.000000
+   },
    {
    "annotation": "optimizer > reorder_filter", 
-   "timing": 0.000056
-   }
-,
+   "timing": 0.000007
+   },
    {
    "annotation": "optimizer > statistics_propagation", 
-   "timing": 0.000263
-   }
-,
+   "timing": 0.000027
+   },
    {
    "annotation": "optimizer > top_n", 
-   "timing": 0.000003
-   }
-,
+   "timing": 0.000000
+   },
    {
    "annotation": "optimizer > unused_columns", 
-   "timing": 0.000074
-   }
-,
+   "timing": 0.000007
+   },
    {
    "annotation": "physical_planner", 
-   "timing": 0.000284
-   }
-,
+   "timing": 0.000033
+   },
    {
    "annotation": "physical_planner > column_binding", 
-   "timing": 0.000052
-   }
-,
+   "timing": 0.000005
+   },
    {
    "annotation": "physical_planner > create_plan", 
-   "timing": 0.000153
-   }
-,
+   "timing": 0.000020
+   },
    {
    "annotation": "physical_planner > resolve_types", 
-   "timing": 0.000035
-   }
-,
+   "timing": 0.000003
+   },
    {
    "annotation": "planner", 
-   "timing": 0.001219
-   }
-,
+   "timing": 0.000115
+   },
    {
    "annotation": "planner > binder", 
-   "timing": 0.001173
+   "timing": 0.000109
    }
-
    ],
-   "children": [{
-   "name": "SIMPLE_AGGREGATE",
-   "timing":0.01,
-   "cardinality":1,
-   "extra_info": "sum(#0)",
-   "timings":[        {
-      "annotation": "ExpressionRoot",
-      "id": 1,
-      "name": "#0",
-      "timing": "NULL" ,
-      "cycles_per_tuple": 643.5403,
-      "sample_size": 124,
-      "input_size": 11618,
-      "extra_info": "child_executor"
-      }
-   
-  ],
    "children": [
-   {
-      "name": "PROJECTION",
-      "timing":0.06,
-      "cardinality":23236,
-      "extra_info": "*(l_extendedprice, l_discount)\n",
-      "timings":[           {
+    {
+      "name": "SIMPLE_AGGREGATE",
+      "timing":0.00,
+      "cardinality":1,
+      "extra_info": "sum(#0)",
+      "timings": [
+        {
          "annotation": "ExpressionRoot",
          "id": 1,
-         "name": "*(l_extendedprice, l_discount)",
+         "name": "#0",
          "timing": "NULL" ,
-         "cycles_per_tuple": 2993.1898,
-         "sample_size": 137,
+         "cycles_per_tuple": 7.5782,
+         "sample_size": 147,
          "input_size": 11618,
-         "extra_info": "projection"
-         },
-         {
-         "annotation": "Function",
-         "id": 1,
-         "name": "*",
-         "timing": "NULL" ,
-         "cycles_per_tuple": 572.2053,
-         "sample_size": 151,
-         "input_size": 11618,
-         "extra_info": ""
-         }
-      
-  ],
+         "extra_info": "child_executor"
+       }
+      ],
       "children": [
-      {
-         "name": "SEQ_SCAN",
-         "timing":0.51,
+       {
+         "name": "PROJECTION",
+         "timing":0.00,
          "cardinality":23236,
-         "extra_info": "lineitem\n[INFOSEPARATOR]\nl_extendedprice\nl_discount\nl_shipdate\nl_quantity\n[INFOSEPARATOR]\nFilters: l_shipdate>=1994-01-01 AND l_shipdate<1995-01-01 AND l_shipdate IS NOT NULL\nl_discount>=0.05 AND l_discount<=0.07 AND l_discount IS NOT NULL\nl_quantity<24 AND l_quantity IS NOT NULL\n",
-         "timings":[
-         
-  ],
-         "children": [         ]
-         }
+         "extra_info": "*(l_extendedprice, l_discount)\n",
+         "timings": [
+           {
+            "annotation": "ExpressionRoot",
+            "id": 1,
+            "name": "*(l_extendedprice, l_discount)",
+            "timing": "NULL" ,
+            "cycles_per_tuple": 343.4118,
+            "sample_size": 102,
+            "input_size": 11618,
+            "extra_info": "projection"
+          },
+          {
+            "annotation": "Function",
+            "id": 1,
+            "name": "*",
+            "timing": "NULL" ,
+            "cycles_per_tuple": 46.1550,
+            "sample_size": 129,
+            "input_size": 11618,
+            "extra_info": ""
+          }
+         ],
+         "children": [
+          {
+            "name": "SEQ_SCAN",
+            "timing":0.04,
+            "cardinality":23236,
+            "extra_info": "lineitem\n[INFOSEPARATOR]\nl_extendedprice\nl_discount\nl_shipdate\nl_quantity\n[INFOSEPARATOR]\nFilters: l_shipdate>=1994-01-01 AND l_shipdate<1995-01-01 AND l_shipdate IS NOT NULL\nl_discount>=0.05 AND l_discount<=0.07 AND l_discount IS NOT NULL\nl_quantity<24 AND l_quantity IS NOT NULL\n",
+            "timings": [
+            ],
+            "children": [
+            ]
+          }
+         ]
+       }
       ]
-      }
+    }
    ]
-   }
-]}</script>
+}</script>
 <script> var secondData = null;</script>
 
 <script>const green = '#80ff80';
@@ -19914,7 +19896,7 @@ var isDiff = false;
 
 function diff(obj1, obj2) {
     for (key in obj1) {
-        if (!obj2.hasOwnProperty(key)) throw "not cur";
+        if (!obj2.hasOwnProperty(key)) throw "two json files do not belong to the same query";
         {
             if (typeof obj2[key] === 'object') {
                 diff(obj1[key], obj2[key]);

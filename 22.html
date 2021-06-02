@@ -19734,590 +19734,573 @@ div {
 </script>
 <script> var data = {
    "name":  "Query", 
-   "result": 0.219208,
-   "timing": 0.219208,
+   "result": 0.050699,
+   "timing": 0.050699,
+   "cardinality": 7,
    "extra-info": "SELECT\n    cntrycode,\n    count(*) AS numcust,\n    sum(c_acctbal) AS totacctbal\nFROM (\n    SELECT\n        substring(c_phone FROM 1 FOR 2) AS cntrycode,\n        c_acctbal\n    FROM\n        customer\n    WHERE\n        substring(c_phone FROM 1 FOR 2) IN ('13', '31', '23', '29', '30', '18', '17')\n        AND c_acctbal > (\n            SELECT\n                avg(c_acctbal)\n            FROM\n                customer\n            WHERE\n                c_acctbal > 0.00\n                AND substring(c_phone FROM 1 FOR 2) IN ('13', '31', '23', '29', '30', '18', '17'))\n            AND NOT EXISTS (\n                SELECT\n                    *\n                FROM\n                    orders\n                WHERE\n                    o_custkey = c_custkey)) AS custsale\nGROUP BY\n    cntrycode\nORDER BY\n    cntrycode;\n	\n\n", 
    "timings": [
    {
    "annotation": "optimizer", 
-   "timing": 0.012092
-   }
-,
+   "timing": 0.004625
+   },
    {
    "annotation": "optimizer > column_lifetime", 
-   "timing": 0.000228
-   }
-,
+   "timing": 0.000030
+   },
    {
    "annotation": "optimizer > common_aggregate", 
-   "timing": 0.000110
-   }
-,
+   "timing": 0.000010
+   },
    {
    "annotation": "optimizer > common_subexpressions", 
-   "timing": 0.000124
-   }
-,
+   "timing": 0.000013
+   },
    {
    "annotation": "optimizer > deliminator", 
-   "timing": 0.000271
-   }
-,
+   "timing": 0.000074
+   },
    {
    "annotation": "optimizer > expression_rewriter", 
-   "timing": 0.001588
-   }
-,
+   "timing": 0.000491
+   },
    {
    "annotation": "optimizer > filter_pullup", 
-   "timing": 0.000022
-   }
-,
+   "timing": 0.000005
+   },
    {
    "annotation": "optimizer > filter_pushdown", 
-   "timing": 0.005540
-   }
-,
+   "timing": 0.000543
+   },
    {
    "annotation": "optimizer > in_clause", 
-   "timing": 0.002585
-   }
-,
+   "timing": 0.003177
+   },
    {
    "annotation": "optimizer > join_order", 
-   "timing": 0.000385
-   }
-,
+   "timing": 0.000039
+   },
    {
    "annotation": "optimizer > regex_range", 
-   "timing": 0.000017
-   }
-,
+   "timing": 0.000004
+   },
    {
    "annotation": "optimizer > reorder_filter", 
-   "timing": 0.000095
-   }
-,
+   "timing": 0.000014
+   },
    {
    "annotation": "optimizer > statistics_propagation", 
-   "timing": 0.000584
-   }
-,
+   "timing": 0.000119
+   },
    {
    "annotation": "optimizer > top_n", 
-   "timing": 0.000011
-   }
-,
+   "timing": 0.000001
+   },
    {
    "annotation": "optimizer > unused_columns", 
-   "timing": 0.000309
-   }
-,
+   "timing": 0.000041
+   },
    {
    "annotation": "physical_planner", 
-   "timing": 0.001538
-   }
-,
+   "timing": 0.000126
+   },
    {
    "annotation": "physical_planner > column_binding", 
-   "timing": 0.000380
-   }
-,
+   "timing": 0.000042
+   },
    {
    "annotation": "physical_planner > create_plan", 
-   "timing": 0.000752
-   }
-,
+   "timing": 0.000046
+   },
    {
    "annotation": "physical_planner > resolve_types", 
-   "timing": 0.000262
-   }
-,
+   "timing": 0.000012
+   },
    {
    "annotation": "planner", 
-   "timing": 0.004494
-   }
-,
+   "timing": 0.000441
+   },
    {
    "annotation": "planner > binder", 
-   "timing": 0.004431
+   "timing": 0.000431
    }
-
    ],
-   "children": [{
-   "name": "ORDER_BY",
-   "timing":0.00,
-   "cardinality":7,
-   "extra_info": "#0 ASC",
-   "timings":[
-   
-  ],
    "children": [
-   {
-      "name": "HASH_GROUP_BY",
+    {
+      "name": "ORDER_BY",
       "timing":0.00,
       "cardinality":7,
-      "extra_info": "#0\ncount_star()\nsum(#1)",
-      "timings":[
-      
-  ],
+      "extra_info": "#0 ASC",
+      "timings": [
+      ],
       "children": [
-      {
-         "name": "PROJECTION",
+       {
+         "name": "HASH_GROUP_BY",
          "timing":0.00,
-         "cardinality":641,
-         "extra_info": "cntrycode\nc_acctbal\n",
-         "timings":[              {
-            "annotation": "ExpressionRoot",
-            "id": 1,
-            "name": "#0",
-            "timing": "NULL" ,
-            "cycles_per_tuple": 233.6365,
-            "sample_size": 641,
-            "input_size": 641,
-            "extra_info": "projection"
-            },
-            {
-            "annotation": "ExpressionRoot",
-            "id": 2,
-            "name": "#1",
-            "timing": "NULL" ,
-            "cycles_per_tuple": 5.5913,
-            "sample_size": 641,
-            "input_size": 641,
-            "extra_info": "projection"
-            }
-         
-  ],
+         "cardinality":7,
+         "extra_info": "#0\ncount_star()\nsum(#1)",
+         "timings": [
+         ],
          "children": [
-         {
+          {
             "name": "PROJECTION",
             "timing":0.00,
             "cardinality":641,
             "extra_info": "cntrycode\nc_acctbal\n",
-            "timings":[                 {
+            "timings": [
+              {
                "annotation": "ExpressionRoot",
                "id": 1,
-               "name": "substring(c_phone, 1, 2)",
+               "name": "#0",
                "timing": "NULL" ,
-               "cycles_per_tuple": 3922.7629,
+               "cycles_per_tuple": 10.2668,
                "sample_size": 641,
                "input_size": 641,
                "extra_info": "projection"
-               },
-               {
-               "annotation": "Function",
-               "id": 1,
-               "name": "substring",
-               "timing": "NULL" ,
-               "cycles_per_tuple": 1340.3697,
-               "sample_size": 641,
-               "input_size": 641,
-               "extra_info": ""
-               },
-               {
+             },
+             {
                "annotation": "ExpressionRoot",
                "id": 2,
                "name": "#1",
                "timing": "NULL" ,
-               "cycles_per_tuple": 7.8658,
+               "cycles_per_tuple": 9.9953,
                "sample_size": 641,
                "input_size": 641,
                "extra_info": "projection"
-               }
-            
-  ],
+             }
+            ],
             "children": [
-            {
-               "name": "HASH_JOIN",
-               "timing":0.08,
+             {
+               "name": "PROJECTION",
+               "timing":0.00,
                "cardinality":641,
-               "extra_info": "ANTI\nc_custkey=c_custkey\n",
-               "timings":[                    {
+               "extra_info": "cntrycode\nc_acctbal\n",
+               "timings": [
+                 {
                   "annotation": "ExpressionRoot",
                   "id": 1,
-                  "name": "#2",
+                  "name": "substring(c_phone, 1, 2)",
                   "timing": "NULL" ,
-                  "cycles_per_tuple": 297.2417,
-                  "sample_size": 120,
-                  "input_size": 1856,
-                  "extra_info": "probe_executor"
-                  },
-                  {
+                  "cycles_per_tuple": 334.6349,
+                  "sample_size": 641,
+                  "input_size": 641,
+                  "extra_info": "projection"
+                },
+                {
+                  "annotation": "Function",
+                  "id": 1,
+                  "name": "substring",
+                  "timing": "NULL" ,
+                  "cycles_per_tuple": 243.2839,
+                  "sample_size": 641,
+                  "input_size": 641,
+                  "extra_info": ""
+                },
+                {
                   "annotation": "ExpressionRoot",
                   "id": 2,
-                  "name": "#0",
+                  "name": "#1",
                   "timing": "NULL" ,
-                  "cycles_per_tuple": 9.4453,
-                  "sample_size": 2048,
-                  "input_size": 150000,
-                  "extra_info": "build_executor"
-                  }
-               
-  ],
+                  "cycles_per_tuple": 0.8612,
+                  "sample_size": 641,
+                  "input_size": 641,
+                  "extra_info": "projection"
+                }
+               ],
                "children": [
-               {
-                  "name": "PIECEWISE_MERGE_JOIN",
+                {
+                  "name": "HASH_JOIN",
                   "timing":0.01,
-                  "cardinality":1856,
-                  "extra_info": "INNER\nCAST(c_acctbal AS DOUBLE)>SUBQUERY\n",
-                  "timings":[                       {
+                  "cardinality":641,
+                  "extra_info": "ANTI\nc_custkey=c_custkey\n",
+                  "timings": [
+                    {
                      "annotation": "ExpressionRoot",
                      "id": 1,
-                     "name": "CAST(c_acctbal AS DOUBLE)",
+                     "name": "#2",
                      "timing": "NULL" ,
-                     "cycles_per_tuple": 611.3112,
-                     "sample_size": 286,
-                     "input_size": 4115,
-                     "extra_info": "lhs_executor"
-                     },
-                     {
+                     "cycles_per_tuple": 70.7667,
+                     "sample_size": 120,
+                     "input_size": 1856,
+                     "extra_info": "probe_executor"
+                   },
+                   {
                      "annotation": "ExpressionRoot",
                      "id": 2,
                      "name": "#0",
                      "timing": "NULL" ,
-                     "cycles_per_tuple": 9936.0000,
-                     "sample_size": 1,
-                     "input_size": 1,
-                     "extra_info": "rhs_executor"
-                     }
-                  
-  ],
+                     "cycles_per_tuple": 4.5244,
+                     "sample_size": 2048,
+                     "input_size": 150000,
+                     "extra_info": "build_executor"
+                   }
+                  ],
                   "children": [
-                  {
-                     "name": "PROJECTION",
-                     "timing":0.01,
-                     "cardinality":4115,
-                     "extra_info": "#0\n#1\n#2\n",
-                     "timings":[                          {
+                   {
+                     "name": "PIECEWISE_MERGE_JOIN",
+                     "timing":0.00,
+                     "cardinality":1856,
+                     "extra_info": "INNER\nCAST(c_acctbal AS DOUBLE)>SUBQUERY\n",
+                     "timings": [
+                       {
                         "annotation": "ExpressionRoot",
                         "id": 1,
-                        "name": "#0",
+                        "name": "CAST(c_acctbal AS DOUBLE)",
                         "timing": "NULL" ,
-                        "cycles_per_tuple": 1545.6888,
+                        "cycles_per_tuple": 294.0105,
                         "sample_size": 286,
                         "input_size": 4115,
-                        "extra_info": "projection"
-                        },
-                        {
+                        "extra_info": "lhs_executor"
+                      },
+                      {
                         "annotation": "ExpressionRoot",
                         "id": 2,
-                        "name": "#1",
-                        "timing": "NULL" ,
-                        "cycles_per_tuple": 173.2273,
-                        "sample_size": 286,
-                        "input_size": 4115,
-                        "extra_info": "projection"
-                        },
-                        {
-                        "annotation": "ExpressionRoot",
-                        "id": 3,
-                        "name": "#2",
-                        "timing": "NULL" ,
-                        "cycles_per_tuple": 166.0874,
-                        "sample_size": 286,
-                        "input_size": 4115,
-                        "extra_info": "projection"
-                        }
-                     
-  ],
-                     "children": [
-                     {
-                        "name": "FILTER",
-                        "timing":0.01,
-                        "cardinality":4115,
-                        "extra_info": "IN (...)",
-                        "timings":[                             {
-                           "annotation": "ExpressionRoot",
-                           "id": 1,
-                           "name": "#3",
-                           "timing": "NULL" ,
-                           "cycles_per_tuple": 96.0947,
-                           "sample_size": 1024,
-                           "input_size": 15000,
-                           "extra_info": "executor"
-                           }
-                        
-  ],
-                        "children": [
-                        {
-                           "name": "HASH_JOIN",
-                           "timing":0.03,
-                           "cardinality":15000,
-                           "extra_info": "MARK\nsubstring(c_phone, 1, 2)=#0\n",
-                           "timings":[                                {
-                              "annotation": "ExpressionRoot",
-                              "id": 1,
-                              "name": "substring(c_phone, 1, 2)",
-                              "timing": "NULL" ,
-                              "cycles_per_tuple": 3703.9150,
-                              "sample_size": 1024,
-                              "input_size": 15000,
-                              "extra_info": "probe_executor"
-                              },
-                              {
-                              "annotation": "Function",
-                              "id": 1,
-                              "name": "substring",
-                              "timing": "NULL" ,
-                              "cycles_per_tuple": 1306.8467,
-                              "sample_size": 1024,
-                              "input_size": 15000,
-                              "extra_info": ""
-                              },
-                              {
-                              "annotation": "ExpressionRoot",
-                              "id": 2,
-                              "name": "#0",
-                              "timing": "NULL" ,
-                              "cycles_per_tuple": 2311.2857,
-                              "sample_size": 7,
-                              "input_size": 7,
-                              "extra_info": "build_executor"
-                              }
-                           
-  ],
-                           "children": [
-                           {
-                              "name": "SEQ_SCAN",
-                              "timing":0.01,
-                              "cardinality":15000,
-                              "extra_info": "customer\n[INFOSEPARATOR]\nc_phone\nc_acctbal\nc_custkey",
-                              "timings":[
-                              
-  ],
-                              "children": [                              ]
-                              },
-                           {
-                              "name": "CHUNK_SCAN",
-                              "timing":0.00,
-                              "cardinality":14,
-                              "extra_info": "",
-                              "timings":[
-                              
-  ],
-                              "children": [                              ]
-                              }
-                           ]
-                           }
-                        ]
-                        }
-                     ]
-                     },
-                  {
-                     "name": "SIMPLE_AGGREGATE",
-                     "timing":0.00,
-                     "cardinality":2,
-                     "extra_info": "(#0)",
-                     "timings":[                          {
-                        "annotation": "ExpressionRoot",
-                        "id": 1,
                         "name": "#0",
                         "timing": "NULL" ,
-                        "cycles_per_tuple": 4189.0000,
+                        "cycles_per_tuple": 9321.0000,
                         "sample_size": 1,
                         "input_size": 1,
-                        "extra_info": "child_executor"
-                        }
-                     
-  ],
+                        "extra_info": "rhs_executor"
+                      }
+                     ],
                      "children": [
-                     {
+                      {
                         "name": "PROJECTION",
                         "timing":0.00,
-                        "cardinality":2,
-                        "extra_info": "#0\n",
-                        "timings":[                             {
+                        "cardinality":4115,
+                        "extra_info": "#0\n#1\n#2\n",
+                        "timings": [
+                          {
                            "annotation": "ExpressionRoot",
                            "id": 1,
                            "name": "#0",
                            "timing": "NULL" ,
-                           "cycles_per_tuple": 5500.0000,
-                           "sample_size": 1,
-                           "input_size": 1,
+                           "cycles_per_tuple": 7.5664,
+                           "sample_size": 286,
+                           "input_size": 4115,
                            "extra_info": "projection"
-                           }
-                        
-  ],
+                         },
+                         {
+                           "annotation": "ExpressionRoot",
+                           "id": 2,
+                           "name": "#1",
+                           "timing": "NULL" ,
+                           "cycles_per_tuple": 11.2552,
+                           "sample_size": 286,
+                           "input_size": 4115,
+                           "extra_info": "projection"
+                         },
+                         {
+                           "annotation": "ExpressionRoot",
+                           "id": 3,
+                           "name": "#2",
+                           "timing": "NULL" ,
+                           "cycles_per_tuple": 21.0769,
+                           "sample_size": 286,
+                           "input_size": 4115,
+                           "extra_info": "projection"
+                         }
+                        ],
                         "children": [
-                        {
-                           "name": "LIMIT",
+                         {
+                           "name": "FILTER",
                            "timing":0.00,
-                           "cardinality":2,
-                           "extra_info": "",
-                           "timings":[
-                           
-  ],
+                           "cardinality":4115,
+                           "extra_info": "IN (...)",
+                           "timings": [
+                             {
+                              "annotation": "ExpressionRoot",
+                              "id": 1,
+                              "name": "#3",
+                              "timing": "NULL" ,
+                              "cycles_per_tuple": 24.8496,
+                              "sample_size": 1024,
+                              "input_size": 15000,
+                              "extra_info": "executor"
+                            }
+                           ],
                            "children": [
-                           {
-                              "name": "SIMPLE_AGGREGATE",
+                            {
+                              "name": "HASH_JOIN",
                               "timing":0.00,
-                              "cardinality":2,
-                              "extra_info": "avg(#0)",
-                              "timings":[                                   {
+                              "cardinality":15000,
+                              "extra_info": "MARK\nsubstring(c_phone, 1, 2)=#0\n",
+                              "timings": [
+                                {
                                  "annotation": "ExpressionRoot",
                                  "id": 1,
+                                 "name": "substring(c_phone, 1, 2)",
+                                 "timing": "NULL" ,
+                                 "cycles_per_tuple": 139.2783,
+                                 "sample_size": 1024,
+                                 "input_size": 15000,
+                                 "extra_info": "probe_executor"
+                               },
+                               {
+                                 "annotation": "Function",
+                                 "id": 1,
+                                 "name": "substring",
+                                 "timing": "NULL" ,
+                                 "cycles_per_tuple": 106.6973,
+                                 "sample_size": 1024,
+                                 "input_size": 15000,
+                                 "extra_info": ""
+                               },
+                               {
+                                 "annotation": "ExpressionRoot",
+                                 "id": 2,
                                  "name": "#0",
                                  "timing": "NULL" ,
-                                 "cycles_per_tuple": 192.1868,
-                                 "sample_size": 257,
-                                 "input_size": 3741,
-                                 "extra_info": "child_executor"
-                                 }
-                              
-  ],
+                                 "cycles_per_tuple": 2097.4286,
+                                 "sample_size": 7,
+                                 "input_size": 7,
+                                 "extra_info": "build_executor"
+                               }
+                              ],
                               "children": [
-                              {
-                                 "name": "PROJECTION",
+                               {
+                                 "name": "SEQ_SCAN",
                                  "timing":0.00,
-                                 "cardinality":7482,
-                                 "extra_info": "c_acctbal\n",
-                                 "timings":[                                      {
+                                 "cardinality":15000,
+                                 "extra_info": "customer\n[INFOSEPARATOR]\nc_phone\nc_acctbal\nc_custkey",
+                                 "timings": [
+                                 ],
+                                 "children": [
+                                 ]
+                               }
+,
+                               {
+                                 "name": "CHUNK_SCAN",
+                                 "timing":0.00,
+                                 "cardinality":14,
+                                 "extra_info": "",
+                                 "timings": [
+                                 ],
+                                 "children": [
+                                 ]
+                               }
+                              ]
+                            }
+                           ]
+                         }
+                        ]
+                      }
+,
+                      {
+                        "name": "SIMPLE_AGGREGATE",
+                        "timing":0.00,
+                        "cardinality":2,
+                        "extra_info": "(#0)",
+                        "timings": [
+                          {
+                           "annotation": "ExpressionRoot",
+                           "id": 1,
+                           "name": "#0",
+                           "timing": "NULL" ,
+                           "cycles_per_tuple": 156.0000,
+                           "sample_size": 1,
+                           "input_size": 1,
+                           "extra_info": "child_executor"
+                         }
+                        ],
+                        "children": [
+                         {
+                           "name": "PROJECTION",
+                           "timing":0.00,
+                           "cardinality":2,
+                           "extra_info": "#0\n",
+                           "timings": [
+                             {
+                              "annotation": "ExpressionRoot",
+                              "id": 1,
+                              "name": "#0",
+                              "timing": "NULL" ,
+                              "cycles_per_tuple": 6957.0000,
+                              "sample_size": 1,
+                              "input_size": 1,
+                              "extra_info": "projection"
+                            }
+                           ],
+                           "children": [
+                            {
+                              "name": "LIMIT",
+                              "timing":0.00,
+                              "cardinality":2,
+                              "extra_info": "",
+                              "timings": [
+                              ],
+                              "children": [
+                               {
+                                 "name": "SIMPLE_AGGREGATE",
+                                 "timing":0.00,
+                                 "cardinality":2,
+                                 "extra_info": "avg(#0)",
+                                 "timings": [
+                                   {
                                     "annotation": "ExpressionRoot",
                                     "id": 1,
                                     "name": "#0",
                                     "timing": "NULL" ,
-                                    "cycles_per_tuple": 182.0428,
+                                    "cycles_per_tuple": 1.0350,
                                     "sample_size": 257,
                                     "input_size": 3741,
-                                    "extra_info": "projection"
-                                    }
-                                 
-  ],
+                                    "extra_info": "child_executor"
+                                  }
+                                 ],
                                  "children": [
-                                 {
+                                  {
                                     "name": "PROJECTION",
-                                    "timing":0.01,
+                                    "timing":0.00,
                                     "cardinality":7482,
-                                    "extra_info": "#0\n",
-                                    "timings":[                                         {
+                                    "extra_info": "c_acctbal\n",
+                                    "timings": [
+                                      {
                                        "annotation": "ExpressionRoot",
                                        "id": 1,
                                        "name": "#0",
                                        "timing": "NULL" ,
-                                       "cycles_per_tuple": 188.3658,
+                                       "cycles_per_tuple": 0.7471,
                                        "sample_size": 257,
                                        "input_size": 3741,
                                        "extra_info": "projection"
-                                       }
-                                    
-  ],
+                                     }
+                                    ],
                                     "children": [
-                                    {
-                                       "name": "FILTER",
-                                       "timing":0.02,
+                                     {
+                                       "name": "PROJECTION",
+                                       "timing":0.00,
                                        "cardinality":7482,
-                                       "extra_info": "IN (...)",
-                                       "timings":[                                            {
+                                       "extra_info": "#0\n",
+                                       "timings": [
+                                         {
                                           "annotation": "ExpressionRoot",
                                           "id": 1,
-                                          "name": "#2",
+                                          "name": "#0",
                                           "timing": "NULL" ,
-                                          "cycles_per_tuple": 103.6453,
-                                          "sample_size": 922,
-                                          "input_size": 13596,
-                                          "extra_info": "executor"
-                                          }
-                                       
-  ],
+                                          "cycles_per_tuple": 12.6265,
+                                          "sample_size": 257,
+                                          "input_size": 3741,
+                                          "extra_info": "projection"
+                                        }
+                                       ],
                                        "children": [
-                                       {
-                                          "name": "HASH_JOIN",
-                                          "timing":0.06,
-                                          "cardinality":27192,
-                                          "extra_info": "MARK\nsubstring(c_phone, 1, 2)=#0\n",
-                                          "timings":[                                               {
+                                        {
+                                          "name": "FILTER",
+                                          "timing":0.00,
+                                          "cardinality":7482,
+                                          "extra_info": "IN (...)",
+                                          "timings": [
+                                            {
                                              "annotation": "ExpressionRoot",
                                              "id": 1,
-                                             "name": "substring(c_phone, 1, 2)",
+                                             "name": "#2",
                                              "timing": "NULL" ,
-                                             "cycles_per_tuple": 3600.0564,
+                                             "cycles_per_tuple": 28.8655,
                                              "sample_size": 922,
                                              "input_size": 13596,
-                                             "extra_info": "probe_executor"
-                                             },
-                                             {
-                                             "annotation": "Function",
-                                             "id": 1,
-                                             "name": "substring",
-                                             "timing": "NULL" ,
-                                             "cycles_per_tuple": 1376.1388,
-                                             "sample_size": 922,
-                                             "input_size": 13596,
-                                             "extra_info": ""
-                                             },
-                                             {
-                                             "annotation": "ExpressionRoot",
-                                             "id": 2,
-                                             "name": "#0",
-                                             "timing": "NULL" ,
-                                             "cycles_per_tuple": 1900.5714,
-                                             "sample_size": 7,
-                                             "input_size": 7,
-                                             "extra_info": "build_executor"
-                                             }
-                                          
-  ],
+                                             "extra_info": "executor"
+                                           }
+                                          ],
                                           "children": [
-                                          {
-                                             "name": "SEQ_SCAN",
-                                             "timing":0.01,
-                                             "cardinality":27192,
-                                             "extra_info": "customer\n[INFOSEPARATOR]\nc_acctbal\nc_phone\n[INFOSEPARATOR]\nFilters: c_acctbal>0.00 AND c_acctbal IS NOT NULL\n",
-                                             "timings":[
-                                             
-  ],
-                                             "children": [                                             ]
-                                             },
-                                          {
-                                             "name": "CHUNK_SCAN",
+                                           {
+                                             "name": "HASH_JOIN",
                                              "timing":0.00,
-                                             "cardinality":14,
-                                             "extra_info": "",
-                                             "timings":[
-                                             
-  ],
-                                             "children": [                                             ]
-                                             }
+                                             "cardinality":27192,
+                                             "extra_info": "MARK\nsubstring(c_phone, 1, 2)=#0\n",
+                                             "timings": [
+                                               {
+                                                "annotation": "ExpressionRoot",
+                                                "id": 1,
+                                                "name": "substring(c_phone, 1, 2)",
+                                                "timing": "NULL" ,
+                                                "cycles_per_tuple": 361.5217,
+                                                "sample_size": 922,
+                                                "input_size": 13596,
+                                                "extra_info": "probe_executor"
+                                              },
+                                              {
+                                                "annotation": "Function",
+                                                "id": 1,
+                                                "name": "substring",
+                                                "timing": "NULL" ,
+                                                "cycles_per_tuple": 323.9588,
+                                                "sample_size": 922,
+                                                "input_size": 13596,
+                                                "extra_info": ""
+                                              },
+                                              {
+                                                "annotation": "ExpressionRoot",
+                                                "id": 2,
+                                                "name": "#0",
+                                                "timing": "NULL" ,
+                                                "cycles_per_tuple": 1597.5714,
+                                                "sample_size": 7,
+                                                "input_size": 7,
+                                                "extra_info": "build_executor"
+                                              }
+                                             ],
+                                             "children": [
+                                              {
+                                                "name": "SEQ_SCAN",
+                                                "timing":0.00,
+                                                "cardinality":27192,
+                                                "extra_info": "customer\n[INFOSEPARATOR]\nc_acctbal\nc_phone\n[INFOSEPARATOR]\nFilters: c_acctbal>0.00 AND c_acctbal IS NOT NULL\n",
+                                                "timings": [
+                                                ],
+                                                "children": [
+                                                ]
+                                              }
+,
+                                              {
+                                                "name": "CHUNK_SCAN",
+                                                "timing":0.00,
+                                                "cardinality":14,
+                                                "extra_info": "",
+                                                "timings": [
+                                                ],
+                                                "children": [
+                                                ]
+                                              }
+                                             ]
+                                           }
                                           ]
-                                          }
+                                        }
                                        ]
-                                       }
+                                     }
                                     ]
-                                    }
+                                  }
                                  ]
-                                 }
+                               }
                               ]
-                              }
+                            }
                            ]
-                           }
+                         }
                         ]
-                        }
+                      }
                      ]
-                     }
+                   }
+,
+                   {
+                     "name": "SEQ_SCAN",
+                     "timing":0.00,
+                     "cardinality":300000,
+                     "extra_info": "orders\n[INFOSEPARATOR]\no_custkey",
+                     "timings": [
+                     ],
+                     "children": [
+                     ]
+                   }
                   ]
-                  },
-               {
-                  "name": "SEQ_SCAN",
-                  "timing":0.02,
-                  "cardinality":300000,
-                  "extra_info": "orders\n[INFOSEPARATOR]\no_custkey",
-                  "timings":[
-                  
-  ],
-                  "children": [                  ]
-                  }
+                }
                ]
-               }
+             }
             ]
-            }
+          }
          ]
-         }
+       }
       ]
-      }
+    }
    ]
-   }
-]}</script>
+}</script>
 <script> var secondData = null;</script>
 
 <script>const green = '#80ff80';
@@ -20327,7 +20310,7 @@ var isDiff = false;
 
 function diff(obj1, obj2) {
     for (key in obj1) {
-        if (!obj2.hasOwnProperty(key)) throw "not cur";
+        if (!obj2.hasOwnProperty(key)) throw "two json files do not belong to the same query";
         {
             if (typeof obj2[key] === 'object') {
                 diff(obj1[key], obj2[key]);

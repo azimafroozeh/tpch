@@ -19734,579 +19734,566 @@ div {
 </script>
 <script> var data = {
    "name":  "Query", 
-   "result": 0.835634,
-   "timing": 0.835634,
+   "result": 0.073310,
+   "timing": 0.073310,
+   "cardinality": 2,
    "extra-info": "SELECT\n    o_year,\n    sum(\n        CASE WHEN nation = 'BRAZIL' THEN\n            volume\n        ELSE\n            0\n        END) / sum(volume) AS mkt_share\nFROM (\n    SELECT\n        extract(year FROM o_orderdate) AS o_year,\n        l_extendedprice * (1 - l_discount) AS volume,\n        n2.n_name AS nation\n    FROM\n        part,\n        supplier,\n        lineitem,\n        orders,\n        customer,\n        nation n1,\n        nation n2,\n        region\n    WHERE\n        p_partkey = l_partkey\n        AND s_suppkey = l_suppkey\n        AND l_orderkey = o_orderkey\n        AND o_custkey = c_custkey\n        AND c_nationkey = n1.n_nationkey\n        AND n1.n_regionkey = r_regionkey\n        AND r_name = 'AMERICA'\n        AND s_nationkey = n2.n_nationkey\n        AND o_orderdate BETWEEN CAST('1995-01-01' AS date)\n        AND CAST('1996-12-31' AS date)\n        AND p_type = 'ECONOMY ANODIZED STEEL') AS all_nations\nGROUP BY\n    o_year\nORDER BY\n    o_year;\n	\n\n", 
    "timings": [
    {
    "annotation": "optimizer", 
-   "timing": 0.125097
-   }
-,
+   "timing": 0.014270
+   },
    {
    "annotation": "optimizer > column_lifetime", 
-   "timing": 0.000560
-   }
-,
+   "timing": 0.000042
+   },
    {
    "annotation": "optimizer > common_aggregate", 
-   "timing": 0.000108
-   }
-,
+   "timing": 0.000005
+   },
    {
    "annotation": "optimizer > common_subexpressions", 
-   "timing": 0.000270
-   }
-,
+   "timing": 0.000016
+   },
    {
    "annotation": "optimizer > deliminator", 
-   "timing": 0.000010
-   }
-,
+   "timing": 0.000007
+   },
    {
    "annotation": "optimizer > expression_rewriter", 
-   "timing": 0.003986
-   }
-,
+   "timing": 0.001692
+   },
    {
    "annotation": "optimizer > filter_pullup", 
-   "timing": 0.000023
-   }
-,
+   "timing": 0.000013
+   },
    {
    "annotation": "optimizer > filter_pushdown", 
-   "timing": 0.006265
-   }
-,
+   "timing": 0.001271
+   },
    {
    "annotation": "optimizer > in_clause", 
-   "timing": 0.000049
-   }
-,
+   "timing": 0.000009
+   },
    {
    "annotation": "optimizer > join_order", 
-   "timing": 0.111964
-   }
-,
+   "timing": 0.011067
+   },
    {
    "annotation": "optimizer > regex_range", 
-   "timing": 0.000010
-   }
-,
+   "timing": 0.000001
+   },
    {
    "annotation": "optimizer > reorder_filter", 
-   "timing": 0.000115
-   }
-,
+   "timing": 0.000009
+   },
    {
    "annotation": "optimizer > statistics_propagation", 
-   "timing": 0.001095
-   }
-,
+   "timing": 0.000070
+   },
    {
    "annotation": "optimizer > top_n", 
-   "timing": 0.000011
-   }
-,
+   "timing": 0.000001
+   },
    {
    "annotation": "optimizer > unused_columns", 
-   "timing": 0.000339
-   }
-,
+   "timing": 0.000036
+   },
    {
    "annotation": "physical_planner", 
-   "timing": 0.002435
-   }
-,
+   "timing": 0.000123
+   },
    {
    "annotation": "physical_planner > column_binding", 
-   "timing": 0.000562
-   }
-,
+   "timing": 0.000044
+   },
    {
    "annotation": "physical_planner > create_plan", 
-   "timing": 0.001178
-   }
-,
+   "timing": 0.000050
+   },
    {
    "annotation": "physical_planner > resolve_types", 
-   "timing": 0.000532
-   }
-,
+   "timing": 0.000012
+   },
    {
    "annotation": "planner", 
-   "timing": 0.005393
-   }
-,
+   "timing": 0.000430
+   },
    {
    "annotation": "planner > binder", 
-   "timing": 0.005233
+   "timing": 0.000415
    }
-
    ],
-   "children": [{
-   "name": "ORDER_BY",
-   "timing":0.00,
-   "cardinality":2,
-   "extra_info": "#0 ASC",
-   "timings":[
-   
-  ],
    "children": [
-   {
-      "name": "PROJECTION",
+    {
+      "name": "ORDER_BY",
       "timing":0.00,
       "cardinality":2,
-      "extra_info": "o_year\nmkt_share\n",
-      "timings":[           {
-         "annotation": "ExpressionRoot",
-         "id": 1,
-         "name": "#0",
-         "timing": "NULL" ,
-         "cycles_per_tuple": 4280.0000,
-         "sample_size": 2,
-         "input_size": 2,
-         "extra_info": "projection"
-         },
-         {
-         "annotation": "ExpressionRoot",
-         "id": 2,
-         "name": "/(CAST(sum(CASE WHEN (nation=BRAZIL) THEN (volume) ELSE (CAST(0 AS DECIMAL(18,4)))) AS DOUBLE), CAST(sum(#[6.1]) AS DOUBLE))",
-         "timing": "NULL" ,
-         "cycles_per_tuple": 123082.5000,
-         "sample_size": 2,
-         "input_size": 2,
-         "extra_info": "projection"
-         },
-         {
-         "annotation": "Function",
-         "id": 1,
-         "name": "/",
-         "timing": "NULL" ,
-         "cycles_per_tuple": 51450.0000,
-         "sample_size": 2,
-         "input_size": 2,
-         "extra_info": ""
-         }
-      
-  ],
+      "extra_info": "#0 ASC",
+      "timings": [
+      ],
       "children": [
-      {
-         "name": "PERFECT_HASH_GROUP_BY",
+       {
+         "name": "PROJECTION",
          "timing":0.00,
          "cardinality":2,
-         "extra_info": "#0\nsum(#1)\nsum(#2)",
-         "timings":[
-         
-  ],
+         "extra_info": "o_year\nmkt_share\n",
+         "timings": [
+           {
+            "annotation": "ExpressionRoot",
+            "id": 1,
+            "name": "#0",
+            "timing": "NULL" ,
+            "cycles_per_tuple": 263.0000,
+            "sample_size": 2,
+            "input_size": 2,
+            "extra_info": "projection"
+          },
+          {
+            "annotation": "ExpressionRoot",
+            "id": 2,
+            "name": "/(CAST(sum(CASE WHEN (nation=BRAZIL) THEN (volume) ELSE (CAST(0 AS DECIMAL(18,4)))) AS DOUBLE), CAST(sum(#[6.1]) AS DOUBLE))",
+            "timing": "NULL" ,
+            "cycles_per_tuple": 21483.5000,
+            "sample_size": 2,
+            "input_size": 2,
+            "extra_info": "projection"
+          },
+          {
+            "annotation": "Function",
+            "id": 1,
+            "name": "/",
+            "timing": "NULL" ,
+            "cycles_per_tuple": 9926.0000,
+            "sample_size": 2,
+            "input_size": 2,
+            "extra_info": ""
+          }
+         ],
          "children": [
-         {
-            "name": "PROJECTION",
+          {
+            "name": "PERFECT_HASH_GROUP_BY",
             "timing":0.00,
-            "cardinality":282,
-            "extra_info": "o_year\nCASE WHEN (nation=BRAZIL) THEN (volume) ELSE (0.0000)\nvolume\n",
-            "timings":[                 {
-               "annotation": "ExpressionRoot",
-               "id": 1,
-               "name": "#0",
-               "timing": "NULL" ,
-               "cycles_per_tuple": 13.8085,
-               "sample_size": 282,
-               "input_size": 282,
-               "extra_info": "projection"
-               },
-               {
-               "annotation": "ExpressionRoot",
-               "id": 2,
-               "name": "CASE WHEN (nation=BRAZIL) THEN (volume) ELSE (0.0000)",
-               "timing": "NULL" ,
-               "cycles_per_tuple": 2377.5071,
-               "sample_size": 282,
-               "input_size": 282,
-               "extra_info": "projection"
-               },
-               {
-               "annotation": "ExpressionRoot",
-               "id": 3,
-               "name": "#1",
-               "timing": "NULL" ,
-               "cycles_per_tuple": 18.1064,
-               "sample_size": 282,
-               "input_size": 282,
-               "extra_info": "projection"
-               }
-            
-  ],
+            "cardinality":2,
+            "extra_info": "#0\nsum(#1)\nsum(#2)",
+            "timings": [
+            ],
             "children": [
-            {
+             {
                "name": "PROJECTION",
                "timing":0.00,
                "cardinality":282,
-               "extra_info": "year(o_orderdate)\nvolume\nnation\n",
-               "timings":[                    {
+               "extra_info": "o_year\nCASE WHEN (nation=BRAZIL) THEN (volume) ELSE (0.0000)\nvolume\n",
+               "timings": [
+                 {
                   "annotation": "ExpressionRoot",
                   "id": 1,
-                  "name": "year(o_orderdate)",
+                  "name": "#0",
                   "timing": "NULL" ,
-                  "cycles_per_tuple": 664.6489,
+                  "cycles_per_tuple": 2.2801,
                   "sample_size": 282,
                   "input_size": 282,
                   "extra_info": "projection"
-                  },
-                  {
-                  "annotation": "Function",
-                  "id": 1,
-                  "name": "year",
-                  "timing": "NULL" ,
-                  "cycles_per_tuple": 546.7908,
-                  "sample_size": 282,
-                  "input_size": 282,
-                  "extra_info": ""
-                  },
-                  {
+                },
+                {
                   "annotation": "ExpressionRoot",
                   "id": 2,
-                  "name": "*(l_extendedprice, -(1.00, l_discount))",
+                  "name": "CASE WHEN (nation=BRAZIL) THEN (volume) ELSE (0.0000)",
                   "timing": "NULL" ,
-                  "cycles_per_tuple": 951.4929,
+                  "cycles_per_tuple": 214.1738,
                   "sample_size": 282,
                   "input_size": 282,
                   "extra_info": "projection"
-                  },
-                  {
-                  "annotation": "Function",
-                  "id": 2,
-                  "name": "*",
-                  "timing": "NULL" ,
-                  "cycles_per_tuple": 93.7376,
-                  "sample_size": 282,
-                  "input_size": 282,
-                  "extra_info": ""
-                  },
-                  {
-                  "annotation": "Function",
-                  "id": 3,
-                  "name": "-",
-                  "timing": "NULL" ,
-                  "cycles_per_tuple": 253.4858,
-                  "sample_size": 282,
-                  "input_size": 282,
-                  "extra_info": ""
-                  },
-                  {
+                },
+                {
                   "annotation": "ExpressionRoot",
                   "id": 3,
-                  "name": "#6",
+                  "name": "#1",
                   "timing": "NULL" ,
-                  "cycles_per_tuple": 689.1738,
+                  "cycles_per_tuple": 3.0922,
                   "sample_size": 282,
                   "input_size": 282,
                   "extra_info": "projection"
-                  }
-               
-  ],
+                }
+               ],
                "children": [
-               {
-                  "name": "HASH_JOIN",
-                  "timing":0.05,
+                {
+                  "name": "PROJECTION",
+                  "timing":0.00,
                   "cardinality":282,
-                  "extra_info": "INNER\nl_partkey=p_partkey\n",
-                  "timings":[                       {
+                  "extra_info": "year(o_orderdate)\nvolume\nnation\n",
+                  "timings": [
+                    {
                      "annotation": "ExpressionRoot",
                      "id": 1,
-                     "name": "#2",
+                     "name": "year(o_orderdate)",
                      "timing": "NULL" ,
-                     "cycles_per_tuple": 299.8557,
-                     "sample_size": 970,
-                     "input_size": 35705,
-                     "extra_info": "probe_executor"
-                     },
-                     {
+                     "cycles_per_tuple": 59.3865,
+                     "sample_size": 282,
+                     "input_size": 282,
+                     "extra_info": "projection"
+                   },
+                   {
+                     "annotation": "Function",
+                     "id": 1,
+                     "name": "year",
+                     "timing": "NULL" ,
+                     "cycles_per_tuple": 36.3511,
+                     "sample_size": 282,
+                     "input_size": 282,
+                     "extra_info": ""
+                   },
+                   {
                      "annotation": "ExpressionRoot",
                      "id": 2,
-                     "name": "#0",
+                     "name": "*(l_extendedprice, -(1.00, l_discount))",
                      "timing": "NULL" ,
-                     "cycles_per_tuple": 3081.5000,
-                     "sample_size": 8,
-                     "input_size": 147,
-                     "extra_info": "build_executor"
-                     }
-                  
-  ],
+                     "cycles_per_tuple": 64.6702,
+                     "sample_size": 282,
+                     "input_size": 282,
+                     "extra_info": "projection"
+                   },
+                   {
+                     "annotation": "Function",
+                     "id": 2,
+                     "name": "*",
+                     "timing": "NULL" ,
+                     "cycles_per_tuple": 13.2447,
+                     "sample_size": 282,
+                     "input_size": 282,
+                     "extra_info": ""
+                   },
+                   {
+                     "annotation": "Function",
+                     "id": 3,
+                     "name": "-",
+                     "timing": "NULL" ,
+                     "cycles_per_tuple": 12.0922,
+                     "sample_size": 282,
+                     "input_size": 282,
+                     "extra_info": ""
+                   },
+                   {
+                     "annotation": "ExpressionRoot",
+                     "id": 3,
+                     "name": "#6",
+                     "timing": "NULL" ,
+                     "cycles_per_tuple": 3.3794,
+                     "sample_size": 282,
+                     "input_size": 282,
+                     "extra_info": "projection"
+                   }
+                  ],
                   "children": [
-                  {
+                   {
                      "name": "HASH_JOIN",
-                     "timing":0.04,
-                     "cardinality":35705,
-                     "extra_info": "INNER\nl_suppkey=s_suppkey\n",
-                     "timings":[                          {
+                     "timing":0.00,
+                     "cardinality":282,
+                     "extra_info": "INNER\nl_partkey=p_partkey\n",
+                     "timings": [
+                       {
                         "annotation": "ExpressionRoot",
                         "id": 1,
-                        "name": "#3",
+                        "name": "#2",
                         "timing": "NULL" ,
-                        "cycles_per_tuple": 56.6516,
-                        "sample_size": 1065,
+                        "cycles_per_tuple": 5.9952,
+                        "sample_size": 1040,
                         "input_size": 35705,
                         "extra_info": "probe_executor"
-                        },
-                        {
+                      },
+                      {
                         "annotation": "ExpressionRoot",
                         "id": 2,
                         "name": "#0",
                         "timing": "NULL" ,
-                        "cycles_per_tuple": 145.2770,
-                        "sample_size": 1000,
-                        "input_size": 1000,
+                        "cycles_per_tuple": 522.1250,
+                        "sample_size": 8,
+                        "input_size": 147,
                         "extra_info": "build_executor"
-                        }
-                     
-  ],
+                      }
+                     ],
                      "children": [
-                     {
+                      {
                         "name": "HASH_JOIN",
-                        "timing":0.29,
+                        "timing":0.00,
                         "cardinality":35705,
-                        "extra_info": "INNER\nl_orderkey=o_orderkey\n",
-                        "timings":[                             {
+                        "extra_info": "INNER\nl_suppkey=s_suppkey\n",
+                        "timings": [
+                          {
                            "annotation": "ExpressionRoot",
                            "id": 1,
-                           "name": "#4",
+                           "name": "#3",
                            "timing": "NULL" ,
-                           "cycles_per_tuple": 7.5156,
-                           "sample_size": 6144,
-                           "input_size": 600572,
+                           "cycles_per_tuple": 6.1589,
+                           "sample_size": 1045,
+                           "input_size": 35705,
                            "extra_info": "probe_executor"
-                           },
-                           {
+                         },
+                         {
                            "annotation": "ExpressionRoot",
                            "id": 2,
-                           "name": "#1",
+                           "name": "#0",
                            "timing": "NULL" ,
-                           "cycles_per_tuple": 397.5352,
-                           "sample_size": 71,
-                           "input_size": 8922,
+                           "cycles_per_tuple": 8.7800,
+                           "sample_size": 1000,
+                           "input_size": 1000,
                            "extra_info": "build_executor"
-                           }
-                        
-  ],
+                         }
+                        ],
                         "children": [
-                        {
-                           "name": "SEQ_SCAN",
-                           "timing":0.18,
-                           "cardinality":600572,
-                           "extra_info": "lineitem\n[INFOSEPARATOR]\nl_extendedprice\nl_discount\nl_partkey\nl_suppkey\nl_orderkey",
-                           "timings":[
-                           
-  ],
-                           "children": [                           ]
-                           },
-                        {
+                         {
                            "name": "HASH_JOIN",
-                           "timing":0.10,
-                           "cardinality":17844,
-                           "extra_info": "INNER\no_custkey=c_custkey\n",
-                           "timings":[                                {
+                           "timing":0.02,
+                           "cardinality":35705,
+                           "extra_info": "INNER\nl_orderkey=o_orderkey\n",
+                           "timings": [
+                             {
                               "annotation": "ExpressionRoot",
                               "id": 1,
-                              "name": "#2",
+                              "name": "#4",
                               "timing": "NULL" ,
-                              "cycles_per_tuple": 209.2614,
-                              "sample_size": 616,
-                              "input_size": 45624,
+                              "cycles_per_tuple": 1.1257,
+                              "sample_size": 7168,
+                              "input_size": 600572,
                               "extra_info": "probe_executor"
-                              },
-                              {
+                            },
+                            {
                               "annotation": "ExpressionRoot",
                               "id": 2,
-                              "name": "#0",
+                              "name": "#1",
                               "timing": "NULL" ,
-                              "cycles_per_tuple": 226.6373,
-                              "sample_size": 204,
-                              "input_size": 2977,
+                              "cycles_per_tuple": 20.2254,
+                              "sample_size": 71,
+                              "input_size": 8922,
                               "extra_info": "build_executor"
-                              }
-                           
-  ],
+                            }
+                           ],
                            "children": [
-                           {
+                            {
                               "name": "SEQ_SCAN",
-                              "timing":0.09,
-                              "cardinality":91248,
-                              "extra_info": "orders\n[INFOSEPARATOR]\no_orderdate\no_orderkey\no_custkey\n[INFOSEPARATOR]\nFilters: o_orderdate>=1995-01-01 AND o_orderdate<=1996-12-31 AND o_orderdate IS NOT NULL\n",
-                              "timings":[
-                              
-  ],
-                              "children": [                              ]
-                              },
-                           {
+                              "timing":0.01,
+                              "cardinality":600572,
+                              "extra_info": "lineitem\n[INFOSEPARATOR]\nl_extendedprice\nl_discount\nl_partkey\nl_suppkey\nl_orderkey",
+                              "timings": [
+                              ],
+                              "children": [
+                              ]
+                            }
+,
+                            {
                               "name": "HASH_JOIN",
                               "timing":0.01,
-                              "cardinality":5954,
-                              "extra_info": "INNER\nc_nationkey=n_nationkey\n",
-                              "timings":[                                   {
+                              "cardinality":17844,
+                              "extra_info": "INNER\no_custkey=c_custkey\n",
+                              "timings": [
+                                {
                                  "annotation": "ExpressionRoot",
                                  "id": 1,
-                                 "name": "#1",
+                                 "name": "#2",
                                  "timing": "NULL" ,
-                                 "cycles_per_tuple": 12.3857,
-                                 "sample_size": 1024,
-                                 "input_size": 15000,
+                                 "cycles_per_tuple": 22.8655,
+                                 "sample_size": 632,
+                                 "input_size": 45624,
                                  "extra_info": "probe_executor"
-                                 },
-                                 {
+                               },
+                               {
                                  "annotation": "ExpressionRoot",
                                  "id": 2,
                                  "name": "#0",
                                  "timing": "NULL" ,
-                                 "cycles_per_tuple": 1824.4000,
-                                 "sample_size": 5,
-                                 "input_size": 5,
+                                 "cycles_per_tuple": 14.3382,
+                                 "sample_size": 204,
+                                 "input_size": 2977,
                                  "extra_info": "build_executor"
-                                 }
-                              
-  ],
+                               }
+                              ],
                               "children": [
-                              {
+                               {
                                  "name": "SEQ_SCAN",
-                                 "timing":0.00,
-                                 "cardinality":30000,
-                                 "extra_info": "customer\n[INFOSEPARATOR]\nc_custkey\nc_nationkey",
-                                 "timings":[
-                                 
-  ],
-                                 "children": [                                 ]
-                                 },
-                              {
+                                 "timing":0.01,
+                                 "cardinality":91248,
+                                 "extra_info": "orders\n[INFOSEPARATOR]\no_orderdate\no_orderkey\no_custkey\n[INFOSEPARATOR]\nFilters: o_orderdate>=1995-01-01 AND o_orderdate<=1996-12-31 AND o_orderdate IS NOT NULL\n",
+                                 "timings": [
+                                 ],
+                                 "children": [
+                                 ]
+                               }
+,
+                               {
                                  "name": "HASH_JOIN",
                                  "timing":0.00,
-                                 "cardinality":10,
-                                 "extra_info": "INNER\nn_regionkey=r_regionkey\n",
-                                 "timings":[                                      {
+                                 "cardinality":5954,
+                                 "extra_info": "INNER\nc_nationkey=n_nationkey\n",
+                                 "timings": [
+                                   {
                                     "annotation": "ExpressionRoot",
                                     "id": 1,
                                     "name": "#1",
                                     "timing": "NULL" ,
-                                    "cycles_per_tuple": 514.5600,
-                                    "sample_size": 25,
-                                    "input_size": 25,
+                                    "cycles_per_tuple": 5.1152,
+                                    "sample_size": 1024,
+                                    "input_size": 15000,
                                     "extra_info": "probe_executor"
-                                    },
-                                    {
+                                  },
+                                  {
                                     "annotation": "ExpressionRoot",
                                     "id": 2,
                                     "name": "#0",
                                     "timing": "NULL" ,
-                                    "cycles_per_tuple": 26117.0000,
-                                    "sample_size": 1,
-                                    "input_size": 1,
+                                    "cycles_per_tuple": 367.0000,
+                                    "sample_size": 5,
+                                    "input_size": 5,
                                     "extra_info": "build_executor"
-                                    }
-                                 
-  ],
+                                  }
+                                 ],
                                  "children": [
-                                 {
+                                  {
                                     "name": "SEQ_SCAN",
                                     "timing":0.00,
-                                    "cardinality":50,
-                                    "extra_info": "nation\n[INFOSEPARATOR]\nn_nationkey\nn_regionkey",
-                                    "timings":[
-                                    
-  ],
-                                    "children": [                                    ]
-                                    },
-                                 {
-                                    "name": "SEQ_SCAN",
+                                    "cardinality":30000,
+                                    "extra_info": "customer\n[INFOSEPARATOR]\nc_custkey\nc_nationkey",
+                                    "timings": [
+                                    ],
+                                    "children": [
+                                    ]
+                                  }
+,
+                                  {
+                                    "name": "HASH_JOIN",
                                     "timing":0.00,
-                                    "cardinality":2,
-                                    "extra_info": "region\n[INFOSEPARATOR]\nr_regionkey\nr_name\n[INFOSEPARATOR]\nFilters: r_name=AMERICA AND r_name IS NOT NULL\n",
-                                    "timings":[
-                                    
-  ],
-                                    "children": [                                    ]
-                                    }
+                                    "cardinality":10,
+                                    "extra_info": "INNER\nn_regionkey=r_regionkey\n",
+                                    "timings": [
+                                      {
+                                       "annotation": "ExpressionRoot",
+                                       "id": 1,
+                                       "name": "#1",
+                                       "timing": "NULL" ,
+                                       "cycles_per_tuple": 450.3600,
+                                       "sample_size": 25,
+                                       "input_size": 25,
+                                       "extra_info": "probe_executor"
+                                     },
+                                     {
+                                       "annotation": "ExpressionRoot",
+                                       "id": 2,
+                                       "name": "#0",
+                                       "timing": "NULL" ,
+                                       "cycles_per_tuple": 3846.0000,
+                                       "sample_size": 1,
+                                       "input_size": 1,
+                                       "extra_info": "build_executor"
+                                     }
+                                    ],
+                                    "children": [
+                                     {
+                                       "name": "SEQ_SCAN",
+                                       "timing":0.00,
+                                       "cardinality":50,
+                                       "extra_info": "nation\n[INFOSEPARATOR]\nn_nationkey\nn_regionkey",
+                                       "timings": [
+                                       ],
+                                       "children": [
+                                       ]
+                                     }
+,
+                                     {
+                                       "name": "SEQ_SCAN",
+                                       "timing":0.00,
+                                       "cardinality":2,
+                                       "extra_info": "region\n[INFOSEPARATOR]\nr_regionkey\nr_name\n[INFOSEPARATOR]\nFilters: r_name=AMERICA AND r_name IS NOT NULL\n",
+                                       "timings": [
+                                       ],
+                                       "children": [
+                                       ]
+                                     }
+                                    ]
+                                  }
                                  ]
-                                 }
+                               }
                               ]
-                              }
+                            }
                            ]
-                           }
-                        ]
-                        },
-                     {
-                        "name": "HASH_JOIN",
-                        "timing":0.00,
-                        "cardinality":2000,
-                        "extra_info": "INNER\ns_nationkey=n_nationkey\n",
-                        "timings":[                             {
-                           "annotation": "ExpressionRoot",
-                           "id": 1,
-                           "name": "#1",
-                           "timing": "NULL" ,
-                           "cycles_per_tuple": 12.5180,
-                           "sample_size": 1000,
-                           "input_size": 1000,
-                           "extra_info": "probe_executor"
-                           },
-                           {
-                           "annotation": "ExpressionRoot",
-                           "id": 2,
-                           "name": "#1",
-                           "timing": "NULL" ,
-                           "cycles_per_tuple": 534.9200,
-                           "sample_size": 25,
-                           "input_size": 25,
-                           "extra_info": "build_executor"
-                           }
-                        
-  ],
-                        "children": [
-                        {
-                           "name": "SEQ_SCAN",
+                         }
+,
+                         {
+                           "name": "HASH_JOIN",
                            "timing":0.00,
                            "cardinality":2000,
-                           "extra_info": "supplier\n[INFOSEPARATOR]\ns_suppkey\ns_nationkey",
-                           "timings":[
-                           
-  ],
-                           "children": [                           ]
-                           },
-                        {
-                           "name": "SEQ_SCAN",
-                           "timing":0.00,
-                           "cardinality":50,
-                           "extra_info": "nation\n[INFOSEPARATOR]\nn_name\nn_nationkey",
-                           "timings":[
-                           
-  ],
-                           "children": [                           ]
-                           }
+                           "extra_info": "INNER\ns_nationkey=n_nationkey\n",
+                           "timings": [
+                             {
+                              "annotation": "ExpressionRoot",
+                              "id": 1,
+                              "name": "#1",
+                              "timing": "NULL" ,
+                              "cycles_per_tuple": 16.4400,
+                              "sample_size": 1000,
+                              "input_size": 1000,
+                              "extra_info": "probe_executor"
+                            },
+                            {
+                              "annotation": "ExpressionRoot",
+                              "id": 2,
+                              "name": "#1",
+                              "timing": "NULL" ,
+                              "cycles_per_tuple": 152.9200,
+                              "sample_size": 25,
+                              "input_size": 25,
+                              "extra_info": "build_executor"
+                            }
+                           ],
+                           "children": [
+                            {
+                              "name": "SEQ_SCAN",
+                              "timing":0.00,
+                              "cardinality":2000,
+                              "extra_info": "supplier\n[INFOSEPARATOR]\ns_suppkey\ns_nationkey",
+                              "timings": [
+                              ],
+                              "children": [
+                              ]
+                            }
+,
+                            {
+                              "name": "SEQ_SCAN",
+                              "timing":0.00,
+                              "cardinality":50,
+                              "extra_info": "nation\n[INFOSEPARATOR]\nn_name\nn_nationkey",
+                              "timings": [
+                              ],
+                              "children": [
+                              ]
+                            }
+                           ]
+                         }
                         ]
-                        }
+                      }
+,
+                      {
+                        "name": "SEQ_SCAN",
+                        "timing":0.00,
+                        "cardinality":294,
+                        "extra_info": "part\n[INFOSEPARATOR]\np_partkey\np_type\n[INFOSEPARATOR]\nFilters: p_type=ECONOMY ANODIZED STEEL AND p_type IS NOT NULL\n",
+                        "timings": [
+                        ],
+                        "children": [
+                        ]
+                      }
                      ]
-                     },
-                  {
-                     "name": "SEQ_SCAN",
-                     "timing":0.02,
-                     "cardinality":294,
-                     "extra_info": "part\n[INFOSEPARATOR]\np_partkey\np_type\n[INFOSEPARATOR]\nFilters: p_type=ECONOMY ANODIZED STEEL AND p_type IS NOT NULL\n",
-                     "timings":[
-                     
-  ],
-                     "children": [                     ]
-                     }
+                   }
                   ]
-                  }
+                }
                ]
-               }
+             }
             ]
-            }
+          }
          ]
-         }
+       }
       ]
-      }
+    }
    ]
-   }
-]}</script>
+}</script>
 <script> var secondData = null;</script>
 
 <script>const green = '#80ff80';
@@ -20316,7 +20303,7 @@ var isDiff = false;
 
 function diff(obj1, obj2) {
     for (key in obj1) {
-        if (!obj2.hasOwnProperty(key)) throw "not cur";
+        if (!obj2.hasOwnProperty(key)) throw "two json files do not belong to the same query";
         {
             if (typeof obj2[key] === 'object') {
                 diff(obj1[key], obj2[key]);
