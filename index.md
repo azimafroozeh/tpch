@@ -1,4 +1,4 @@
-#nanoseconds(sf=1)
+#Intel-MacBookPro(sf=1, nanoseconds)
 
 [1](nanoseconds/1.html)
 [2](nanoseconds/2.html)
@@ -23,7 +23,7 @@
 [21](nanoseconds/21.html)
 [22](nanoseconds/22.html)
 
-#cycles_per_tuple(sf=0.1)
+#Intel-MacBookPro(sf=0.1, cylces_per_tuple)
 
 [1](cycles_per_tuple/1.html)
 [2](cycles_per_tuple/2.html)
@@ -48,7 +48,7 @@
 [21](cycles_per_tuple/21.html)
 [22](cycles_per_tuple/22.html)
 
-#M1 vs intel-mac (sf=1, cycle_per_tuple)
+#M1 vs Intel-MacBookPro(sf=1, cycle_per_tuple)
 
 [1](m1_vs_intel-mac/1.html)
 [2](m1_vs_intel-mac/2.html)
