@@ -1,4 +1,5 @@
-#nanoseconds
+#nanoseconds(sf=1)
+
 [1](nanoseconds/1.html)
 [2](nanoseconds/2.html)
 [3](nanoseconds/3.html)
@@ -21,7 +22,9 @@
 [20](nanoseconds/20.html)
 [21](nanoseconds/21.html)
 [22](nanoseconds/22.html)
-#cycles_per_tuple
+
+#cycles_per_tuple(sf=0.1)
+
 [1](cycles_per_tuple/1.html)
 [2](cycles_per_tuple/2.html)
 [3](cycles_per_tuple/3.html)

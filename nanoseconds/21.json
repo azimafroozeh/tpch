@@ -1,0 +1,696 @@
+{
+   "name":  "Query", 
+   "result": 1.310581,
+   "timing": 1.310581,
+   "cardinality": 100,
+   "extra-info": "SELECT\n    s_name,\n    count(*) AS numwait\nFROM\n    supplier,\n    lineitem l1,\n    orders,\n    nation\nWHERE\n    s_suppkey = l1.l_suppkey\n    AND o_orderkey = l1.l_orderkey\n    AND o_orderstatus = 'F'\n    AND l1.l_receiptdate > l1.l_commitdate\n    AND EXISTS (\n        SELECT\n            *\n        FROM\n            lineitem l2\n        WHERE\n            l2.l_orderkey = l1.l_orderkey\n            AND l2.l_suppkey <> l1.l_suppkey)\n    AND NOT EXISTS (\n        SELECT\n            *\n        FROM\n            lineitem l3\n        WHERE\n            l3.l_orderkey = l1.l_orderkey\n            AND l3.l_suppkey <> l1.l_suppkey\n            AND l3.l_receiptdate > l3.l_commitdate)\n    AND s_nationkey = n_nationkey\n    AND n_name = 'SAUDI ARABIA'\nGROUP BY\n    s_name\nORDER BY\n    numwait DESC,\n    s_name\nLIMIT 100;\n\t\n\n", 
+   "timings": [
+   {
+   "annotation": "optimizer", 
+   "timing": 0.001868
+   },
+   {
+   "annotation": "optimizer > column_lifetime", 
+   "timing": 0.000053
+   },
+   {
+   "annotation": "optimizer > common_aggregate", 
+   "timing": 0.000008
+   },
+   {
+   "annotation": "optimizer > common_subexpressions", 
+   "timing": 0.000009
+   },
+   {
+   "annotation": "optimizer > deliminator", 
+   "timing": 0.000004
+   },
+   {
+   "annotation": "optimizer > expression_rewriter", 
+   "timing": 0.000239
+   },
+   {
+   "annotation": "optimizer > filter_pullup", 
+   "timing": 0.000006
+   },
+   {
+   "annotation": "optimizer > filter_pushdown", 
+   "timing": 0.001003
+   },
+   {
+   "annotation": "optimizer > in_clause", 
+   "timing": 0.000012
+   },
+   {
+   "annotation": "optimizer > join_order", 
+   "timing": 0.000307
+   },
+   {
+   "annotation": "optimizer > regex_range", 
+   "timing": 0.000003
+   },
+   {
+   "annotation": "optimizer > reorder_filter", 
+   "timing": 0.000015
+   },
+   {
+   "annotation": "optimizer > statistics_propagation", 
+   "timing": 0.000098
+   },
+   {
+   "annotation": "optimizer > top_n", 
+   "timing": 0.000003
+   },
+   {
+   "annotation": "optimizer > unused_columns", 
+   "timing": 0.000068
+   },
+   {
+   "annotation": "physical_planner", 
+   "timing": 0.000171
+   },
+   {
+   "annotation": "physical_planner > column_binding", 
+   "timing": 0.000071
+   },
+   {
+   "annotation": "physical_planner > create_plan", 
+   "timing": 0.000061
+   },
+   {
+   "annotation": "physical_planner > resolve_types", 
+   "timing": 0.000016
+   },
+   {
+   "annotation": "planner", 
+   "timing": 0.000715
+   },
+   {
+   "annotation": "planner > binder", 
+   "timing": 0.000704
+   }
+   ],
+   "children": [
+    {
+      "name": "TOP_N",
+      "timing":0.000110,
+      "cardinality":100,
+      "extra_info": "Top 100\n[INFOSEPARATOR]\n#1 DESC\n#0 ASC",
+      "timings": [
+      ],
+      "children": [
+       {
+         "name": "HASH_GROUP_BY",
+         "timing":0.000466,
+         "cardinality":411,
+         "extra_info": "#0\ncount_star()",
+         "timings": [
+         ],
+         "children": [
+          {
+            "name": "PROJECTION",
+            "timing":0.000036,
+            "cardinality":4141,
+            "extra_info": "s_name\n",
+            "timings": [
+              {
+               "annotation": "ExpressionRoot",
+               "id": 1,
+               "name": "#4",
+               "timing":2.308824,
+               "cycles_per_tuple": "NULL" ,
+               "sample_size": 68,
+               "input_size": 4141,
+               "extra_info": "projection"
+             }
+            ],
+            "children": [
+             {
+               "name": "DELIM_JOIN",
+               "timing":0.009840,
+               "cardinality":4141,
+               "extra_info": "ANTI\nl_orderkey=l_orderkey\nl_suppkey=l_suppkey\n",
+               "timings": [
+               ],
+               "children": [
+                {
+                  "name": "DELIM_JOIN",
+                  "timing":0.011401,
+                  "cardinality":73089,
+                  "extra_info": "SEMI\nl_orderkey=l_orderkey\nl_suppkey=l_suppkey\n",
+                  "timings": [
+                  ],
+                  "children": [
+                   {
+                     "name": "HASH_JOIN",
+                     "timing":0.089957,
+                     "cardinality":75871,
+                     "extra_info": "INNER\nl_suppkey=s_suppkey\n",
+                     "timings": [
+                       {
+                        "annotation": "ExpressionRoot",
+                        "id": 1,
+                        "name": "#0",
+                        "timing":2.670699,
+                        "cycles_per_tuple": "NULL" ,
+                        "sample_size": 18433,
+                        "input_size": 1828911,
+                        "extra_info": "probe_executor"
+                      },
+                      {
+                        "annotation": "ExpressionRoot",
+                        "id": 2,
+                        "name": "#1",
+                        "timing":0.479319,
+                        "cycles_per_tuple": "NULL" ,
+                        "sample_size": 411,
+                        "input_size": 411,
+                        "extra_info": "build_executor"
+                      }
+                     ],
+                     "children": [
+                      {
+                        "name": "HASH_JOIN",
+                        "timing":0.203954,
+                        "cardinality":1828911,
+                        "extra_info": "INNER\nl_orderkey=o_orderkey\n",
+                        "timings": [
+                          {
+                           "annotation": "ExpressionRoot",
+                           "id": 1,
+                           "name": "#1",
+                           "timing":0.709895,
+                           "cycles_per_tuple": "NULL" ,
+                           "sample_size": 36866,
+                           "input_size": 3793296,
+                           "extra_info": "probe_executor"
+                         },
+                         {
+                           "annotation": "ExpressionRoot",
+                           "id": 2,
+                           "name": "#0",
+                           "timing":1.375071,
+                           "cycles_per_tuple": "NULL" ,
+                           "sample_size": 7084,
+                           "input_size": 729413,
+                           "extra_info": "build_executor"
+                         }
+                        ],
+                        "children": [
+                         {
+                           "name": "PROJECTION",
+                           "timing":0.005015,
+                           "cardinality":3793296,
+                           "extra_info": "#0\n#1\n",
+                           "timings": [
+                             {
+                              "annotation": "ExpressionRoot",
+                              "id": 1,
+                              "name": "#0",
+                              "timing":0.169835,
+                              "cycles_per_tuple": "NULL" ,
+                              "sample_size": 39403,
+                              "input_size": 3793296,
+                              "extra_info": "projection"
+                            },
+                            {
+                              "annotation": "ExpressionRoot",
+                              "id": 2,
+                              "name": "#1",
+                              "timing":0.160085,
+                              "cycles_per_tuple": "NULL" ,
+                              "sample_size": 38336,
+                              "input_size": 3793296,
+                              "extra_info": "projection"
+                            }
+                           ],
+                           "children": [
+                            {
+                              "name": "FILTER",
+                              "timing":0.017552,
+                              "cardinality":3793296,
+                              "extra_info": "l_receiptdate>l_commitdate",
+                              "timings": [
+                                {
+                                 "annotation": "ExpressionRoot",
+                                 "id": 1,
+                                 "name": "l_receiptdate>l_commitdate",
+                                 "timing":1.391192,
+                                 "cycles_per_tuple": "NULL" ,
+                                 "sample_size": 63488,
+                                 "input_size": 6001215,
+                                 "extra_info": "executor"
+                               }
+                              ],
+                              "children": [
+                               {
+                                 "name": "SEQ_SCAN",
+                                 "timing":0.016408,
+                                 "cardinality":6001215,
+                                 "extra_info": "lineitem\n[INFOSEPARATOR]\nl_suppkey\nl_orderkey\nl_receiptdate\nl_commitdate",
+                                 "timings": [
+                                 ],
+                                 "children": [
+                                 ]
+                               }
+                              ]
+                            }
+                           ]
+                         }
+,
+                         {
+                           "name": "SEQ_SCAN",
+                           "timing":0.095456,
+                           "cardinality":1458826,
+                           "extra_info": "orders\n[INFOSEPARATOR]\no_orderkey\no_orderstatus\n[INFOSEPARATOR]\nFilters: o_orderstatus=F AND o_orderstatus IS NOT NULL\n",
+                           "timings": [
+                           ],
+                           "children": [
+                           ]
+                         }
+                        ]
+                      }
+,
+                      {
+                        "name": "HASH_JOIN",
+                        "timing":0.000294,
+                        "cardinality":822,
+                        "extra_info": "INNER\ns_nationkey=n_nationkey\n",
+                        "timings": [
+                          {
+                           "annotation": "ExpressionRoot",
+                           "id": 1,
+                           "name": "#2",
+                           "timing":0.714844,
+                           "cycles_per_tuple": "NULL" ,
+                           "sample_size": 1024,
+                           "input_size": 10000,
+                           "extra_info": "probe_executor"
+                         },
+                         {
+                           "annotation": "ExpressionRoot",
+                           "id": 2,
+                           "name": "#0",
+                           "timing":932.000000,
+                           "cycles_per_tuple": "NULL" ,
+                           "sample_size": 1,
+                           "input_size": 1,
+                           "extra_info": "build_executor"
+                         }
+                        ],
+                        "children": [
+                         {
+                           "name": "SEQ_SCAN",
+                           "timing":0.000186,
+                           "cardinality":20000,
+                           "extra_info": "supplier\n[INFOSEPARATOR]\ns_name\ns_suppkey\ns_nationkey",
+                           "timings": [
+                           ],
+                           "children": [
+                           ]
+                         }
+,
+                         {
+                           "name": "SEQ_SCAN",
+                           "timing":0.000048,
+                           "cardinality":2,
+                           "extra_info": "nation\n[INFOSEPARATOR]\nn_nationkey\nn_name\n[INFOSEPARATOR]\nFilters: n_name=SAUDI ARABIA AND n_name IS NOT NULL\n",
+                           "timings": [
+                           ],
+                           "children": [
+                           ]
+                         }
+                        ]
+                      }
+                     ]
+                   }
+,
+                   {
+                     "name": "HASH_JOIN",
+                     "timing":0.017837,
+                     "cardinality":73089,
+                     "extra_info": "SEMI\nl_orderkey=l_orderkey\nl_suppkey=l_suppkey\n",
+                     "timings": [
+                       {
+                        "annotation": "ExpressionRoot",
+                        "id": 1,
+                        "name": "#0",
+                        "timing":0.540901,
+                        "cycles_per_tuple": "NULL" ,
+                        "sample_size": 3374,
+                        "input_size": 302356,
+                        "extra_info": "build_executor"
+                      },
+                      {
+                        "annotation": "ExpressionRoot",
+                        "id": 2,
+                        "name": "#1",
+                        "timing":0.618523,
+                        "cycles_per_tuple": "NULL" ,
+                        "sample_size": 3725,
+                        "input_size": 302356,
+                        "extra_info": "build_executor"
+                      }
+                     ],
+                     "children": [
+                      {
+                        "name": "CHUNK_SCAN",
+                        "timing":0.000039,
+                        "cardinality":75871,
+                        "extra_info": "",
+                        "timings": [
+                        ],
+                        "children": [
+                        ]
+                      }
+,
+                      {
+                        "name": "PROJECTION",
+                        "timing":0.000352,
+                        "cardinality":604712,
+                        "extra_info": "#0\n#1\n",
+                        "timings": [
+                          {
+                           "annotation": "ExpressionRoot",
+                           "id": 1,
+                           "name": "#0",
+                           "timing":0.209638,
+                           "cycles_per_tuple": "NULL" ,
+                           "sample_size": 3258,
+                           "input_size": 302356,
+                           "extra_info": "projection"
+                         },
+                         {
+                           "annotation": "ExpressionRoot",
+                           "id": 2,
+                           "name": "#1",
+                           "timing":0.182879,
+                           "cycles_per_tuple": "NULL" ,
+                           "sample_size": 4112,
+                           "input_size": 302356,
+                           "extra_info": "projection"
+                         }
+                        ],
+                        "children": [
+                         {
+                           "name": "HASH_JOIN",
+                           "timing":0.373670,
+                           "cardinality":604712,
+                           "extra_info": "INNER\nl_orderkey=l_orderkey\nl_suppkey!=l_suppkey\n",
+                           "timings": [
+                             {
+                              "annotation": "ExpressionRoot",
+                              "id": 1,
+                              "name": "#0",
+                              "timing":0.182129,
+                              "cycles_per_tuple": "NULL" ,
+                              "sample_size": 2048,
+                              "input_size": 75864,
+                              "extra_info": "probe_executor"
+                            },
+                            {
+                              "annotation": "ExpressionRoot",
+                              "id": 2,
+                              "name": "#1",
+                              "timing":0.325195,
+                              "cycles_per_tuple": "NULL" ,
+                              "sample_size": 1024,
+                              "input_size": 75864,
+                              "extra_info": "probe_executor"
+                            },
+                            {
+                              "annotation": "ExpressionRoot",
+                              "id": 3,
+                              "name": "#0",
+                              "timing":0.102235,
+                              "cycles_per_tuple": "NULL" ,
+                              "sample_size": 62464,
+                              "input_size": 6001215,
+                              "extra_info": "build_executor"
+                            },
+                            {
+                              "annotation": "ExpressionRoot",
+                              "id": 4,
+                              "name": "#1",
+                              "timing":0.084173,
+                              "cycles_per_tuple": "NULL" ,
+                              "sample_size": 63488,
+                              "input_size": 6001215,
+                              "extra_info": "build_executor"
+                            }
+                           ],
+                           "children": [
+                            {
+                              "name": "DELIM_SCAN",
+                              "timing":0.000042,
+                              "cardinality":151728,
+                              "extra_info": "",
+                              "timings": [
+                              ],
+                              "children": [
+                              ]
+                            }
+,
+                            {
+                              "name": "SEQ_SCAN",
+                              "timing":0.019820,
+                              "cardinality":12002430,
+                              "extra_info": "lineitem\n[INFOSEPARATOR]\nl_orderkey\nl_suppkey",
+                              "timings": [
+                              ],
+                              "children": [
+                              ]
+                            }
+                           ]
+                         }
+                        ]
+                      }
+                     ]
+                   }
+,
+                   {
+                     "name": "HASH_GROUP_BY",
+                     "timing":0.000000,
+                     "cardinality":0,
+                     "extra_info": "#1\n#0",
+                     "timings": [
+                     ],
+                     "children": [
+                     ]
+                   }
+                  ]
+                }
+,
+                {
+                  "name": "HASH_JOIN",
+                  "timing":0.014307,
+                  "cardinality":4141,
+                  "extra_info": "ANTI\nl_orderkey=l_orderkey\nl_suppkey=l_suppkey\n",
+                  "timings": [
+                    {
+                     "annotation": "ExpressionRoot",
+                     "id": 1,
+                     "name": "#0",
+                     "timing":0.841126,
+                     "cycles_per_tuple": "NULL" ,
+                     "sample_size": 2203,
+                     "input_size": 190909,
+                     "extra_info": "build_executor"
+                   },
+                   {
+                     "annotation": "ExpressionRoot",
+                     "id": 2,
+                     "name": "#1",
+                     "timing":1.124097,
+                     "cycles_per_tuple": "NULL" ,
+                     "sample_size": 2216,
+                     "input_size": 190909,
+                     "extra_info": "build_executor"
+                   }
+                  ],
+                  "children": [
+                   {
+                     "name": "CHUNK_SCAN",
+                     "timing":0.000039,
+                     "cardinality":73089,
+                     "extra_info": "",
+                     "timings": [
+                     ],
+                     "children": [
+                     ]
+                   }
+,
+                   {
+                     "name": "PROJECTION",
+                     "timing":0.000338,
+                     "cardinality":381818,
+                     "extra_info": "#0\n#1\n",
+                     "timings": [
+                       {
+                        "annotation": "ExpressionRoot",
+                        "id": 1,
+                        "name": "#0",
+                        "timing":0.203429,
+                        "cycles_per_tuple": "NULL" ,
+                        "sample_size": 2566,
+                        "input_size": 190909,
+                        "extra_info": "projection"
+                      },
+                      {
+                        "annotation": "ExpressionRoot",
+                        "id": 2,
+                        "name": "#1",
+                        "timing":0.164207,
+                        "cycles_per_tuple": "NULL" ,
+                        "sample_size": 2710,
+                        "input_size": 190909,
+                        "extra_info": "projection"
+                      }
+                     ],
+                     "children": [
+                      {
+                        "name": "HASH_JOIN",
+                        "timing":0.328568,
+                        "cardinality":381818,
+                        "extra_info": "INNER\nl_orderkey=l_orderkey\nl_suppkey!=l_suppkey\n",
+                        "timings": [
+                          {
+                           "annotation": "ExpressionRoot",
+                           "id": 1,
+                           "name": "#0",
+                           "timing":0.325195,
+                           "cycles_per_tuple": "NULL" ,
+                           "sample_size": 1024,
+                           "input_size": 73082,
+                           "extra_info": "probe_executor"
+                         },
+                         {
+                           "annotation": "ExpressionRoot",
+                           "id": 2,
+                           "name": "#1",
+                           "timing":0.292969,
+                           "cycles_per_tuple": "NULL" ,
+                           "sample_size": 1024,
+                           "input_size": 73082,
+                           "extra_info": "probe_executor"
+                         },
+                         {
+                           "annotation": "ExpressionRoot",
+                           "id": 3,
+                           "name": "#0",
+                           "timing":0.620837,
+                           "cycles_per_tuple": "NULL" ,
+                           "sample_size": 36090,
+                           "input_size": 3793296,
+                           "extra_info": "build_executor"
+                         },
+                         {
+                           "annotation": "ExpressionRoot",
+                           "id": 4,
+                           "name": "#1",
+                           "timing":1.065611,
+                           "cycles_per_tuple": "NULL" ,
+                           "sample_size": 39993,
+                           "input_size": 3793296,
+                           "extra_info": "build_executor"
+                         }
+                        ],
+                        "children": [
+                         {
+                           "name": "DELIM_SCAN",
+                           "timing":0.000038,
+                           "cardinality":146164,
+                           "extra_info": "",
+                           "timings": [
+                           ],
+                           "children": [
+                           ]
+                         }
+,
+                         {
+                           "name": "PROJECTION",
+                           "timing":0.010850,
+                           "cardinality":7586592,
+                           "extra_info": "#0\n#1\n",
+                           "timings": [
+                             {
+                              "annotation": "ExpressionRoot",
+                              "id": 1,
+                              "name": "#0",
+                              "timing":0.180026,
+                              "cycles_per_tuple": "NULL" ,
+                              "sample_size": 36317,
+                              "input_size": 3793296,
+                              "extra_info": "projection"
+                            },
+                            {
+                              "annotation": "ExpressionRoot",
+                              "id": 2,
+                              "name": "#1",
+                              "timing":0.175424,
+                              "cycles_per_tuple": "NULL" ,
+                              "sample_size": 36751,
+                              "input_size": 3793296,
+                              "extra_info": "projection"
+                            }
+                           ],
+                           "children": [
+                            {
+                              "name": "FILTER",
+                              "timing":0.048980,
+                              "cardinality":7586592,
+                              "extra_info": "l_receiptdate>l_commitdate",
+                              "timings": [
+                                {
+                                 "annotation": "ExpressionRoot",
+                                 "id": 1,
+                                 "name": "l_receiptdate>l_commitdate",
+                                 "timing":2.007280,
+                                 "cycles_per_tuple": "NULL" ,
+                                 "sample_size": 56320,
+                                 "input_size": 6001215,
+                                 "extra_info": "executor"
+                               }
+                              ],
+                              "children": [
+                               {
+                                 "name": "SEQ_SCAN",
+                                 "timing":0.049438,
+                                 "cardinality":12002430,
+                                 "extra_info": "lineitem\n[INFOSEPARATOR]\nl_orderkey\nl_suppkey\nl_commitdate\nl_receiptdate",
+                                 "timings": [
+                                 ],
+                                 "children": [
+                                 ]
+                               }
+                              ]
+                            }
+                           ]
+                         }
+                        ]
+                      }
+                     ]
+                   }
+                  ]
+                }
+,
+                {
+                  "name": "HASH_GROUP_BY",
+                  "timing":0.000000,
+                  "cardinality":0,
+                  "extra_info": "#1\n#0",
+                  "timings": [
+                  ],
+                  "children": [
+                  ]
+                }
+               ]
+             }
+            ]
+          }
+         ]
+       }
+      ]
+    }
+   ]
+}
