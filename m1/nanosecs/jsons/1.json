@@ -1,0 +1,345 @@
+{
+   "name":  "Query", 
+   "result": 0.253706,
+   "timing": 0.253706,
+   "cardinality": 4,
+   "extra-info": "SELECT\n    l_returnflag,\n    l_linestatus,\n    sum(l_quantity) AS sum_qty,\n    sum(l_extendedprice) AS sum_base_price,\n    sum(l_extendedprice * (1 - l_discount)) AS sum_disc_price,\n    sum(l_extendedprice * (1 - l_discount) * (1 + l_tax)) AS sum_charge,\n    avg(l_quantity) AS avg_qty,\n    avg(l_extendedprice) AS avg_price,\n    avg(l_discount) AS avg_disc,\n    count(*) AS count_order\nFROM\n    lineitem\nWHERE\n    l_shipdate <= CAST('1998-09-02' AS date)\nGROUP BY\n    l_returnflag,\n    l_linestatus\nORDER BY\n    l_returnflag,\n    l_linestatus;\n\t\n\n", 
+   "timings": [
+   {
+   "annotation": "optimizer", 
+   "timing": 0.000392
+   },
+   {
+   "annotation": "optimizer > column_lifetime", 
+   "timing": 0.000004
+   },
+   {
+   "annotation": "optimizer > common_aggregate", 
+   "timing": 0.000003
+   },
+   {
+   "annotation": "optimizer > common_subexpressions", 
+   "timing": 0.000010
+   },
+   {
+   "annotation": "optimizer > deliminator", 
+   "timing": 0.000000
+   },
+   {
+   "annotation": "optimizer > expression_rewriter", 
+   "timing": 0.000270
+   },
+   {
+   "annotation": "optimizer > filter_pullup", 
+   "timing": 0.000000
+   },
+   {
+   "annotation": "optimizer > filter_pushdown", 
+   "timing": 0.000041
+   },
+   {
+   "annotation": "optimizer > in_clause", 
+   "timing": 0.000001
+   },
+   {
+   "annotation": "optimizer > join_order", 
+   "timing": 0.000001
+   },
+   {
+   "annotation": "optimizer > regex_range", 
+   "timing": 0.000000
+   },
+   {
+   "annotation": "optimizer > reorder_filter", 
+   "timing": 0.000002
+   },
+   {
+   "annotation": "optimizer > statistics_propagation", 
+   "timing": 0.000047
+   },
+   {
+   "annotation": "optimizer > top_n", 
+   "timing": 0.000000
+   },
+   {
+   "annotation": "optimizer > unused_columns", 
+   "timing": 0.000006
+   },
+   {
+   "annotation": "physical_planner", 
+   "timing": 0.000040
+   },
+   {
+   "annotation": "physical_planner > column_binding", 
+   "timing": 0.000007
+   },
+   {
+   "annotation": "physical_planner > create_plan", 
+   "timing": 0.000026
+   },
+   {
+   "annotation": "physical_planner > resolve_types", 
+   "timing": 0.000003
+   },
+   {
+   "annotation": "planner", 
+   "timing": 0.000108
+   },
+   {
+   "annotation": "planner > binder", 
+   "timing": 0.000102
+   }
+   ],
+   "children": [
+    {
+      "name": "ORDER_BY",
+      "timing":0.000100,
+      "cardinality":4,
+      "extra_info": "#0 ASC\n#1 ASC",
+      "timings": [
+      ],
+      "children": [
+       {
+         "name": "HASH_GROUP_BY",
+         "timing":0.162342,
+         "cardinality":4,
+         "extra_info": "#0\n#1\nsum(#2)\nsum(#3)\nsum(#4)\nsum(#5)\navg(#6)\navg(#7)\navg(#8)\ncount_star()",
+         "timings": [
+         ],
+         "children": [
+          {
+            "name": "PROJECTION",
+            "timing":0.012613,
+            "cardinality":5916591,
+            "extra_info": "l_returnflag\nl_linestatus\nl_quantity\nl_extendedprice\n#4\n*(#4, +(1.00, l_tax))\nl_quantity\nl_extendedprice\nl_discount\n",
+            "timings": [
+              {
+               "annotation": "ExpressionRoot",
+               "id": 1,
+               "name": "#0",
+               "timing":0.030654,
+               "cycles_per_tuple": "NULL" ,
+               "sample_size": 59601,
+               "input_size": 5916591,
+               "extra_info": "projection"
+             },
+             {
+               "annotation": "ExpressionRoot",
+               "id": 2,
+               "name": "#1",
+               "timing":0.023456,
+               "cycles_per_tuple": "NULL" ,
+               "sample_size": 60539,
+               "input_size": 5916591,
+               "extra_info": "projection"
+             },
+             {
+               "annotation": "ExpressionRoot",
+               "id": 3,
+               "name": "#2",
+               "timing":0.025776,
+               "cycles_per_tuple": "NULL" ,
+               "sample_size": 59630,
+               "input_size": 5916591,
+               "extra_info": "projection"
+             },
+             {
+               "annotation": "ExpressionRoot",
+               "id": 4,
+               "name": "#3",
+               "timing":0.023841,
+               "cycles_per_tuple": "NULL" ,
+               "sample_size": 57465,
+               "input_size": 5916591,
+               "extra_info": "projection"
+             },
+             {
+               "annotation": "ExpressionRoot",
+               "id": 5,
+               "name": "#4",
+               "timing":0.026744,
+               "cycles_per_tuple": "NULL" ,
+               "sample_size": 57695,
+               "input_size": 5916591,
+               "extra_info": "projection"
+             },
+             {
+               "annotation": "ExpressionRoot",
+               "id": 6,
+               "name": "*(#4, +(1.00, l_tax))",
+               "timing":2.111821,
+               "cycles_per_tuple": "NULL" ,
+               "sample_size": 55580,
+               "input_size": 5916591,
+               "extra_info": "projection"
+             },
+             {
+               "annotation": "Function",
+               "id": 1,
+               "name": "*",
+               "timing":0.447893,
+               "cycles_per_tuple": "NULL" ,
+               "sample_size": 57583,
+               "input_size": 5916591,
+               "extra_info": ""
+             },
+             {
+               "annotation": "Function",
+               "id": 2,
+               "name": "+",
+               "timing":1.289358,
+               "cycles_per_tuple": "NULL" ,
+               "sample_size": 57555,
+               "input_size": 5916591,
+               "extra_info": ""
+             },
+             {
+               "annotation": "ExpressionRoot",
+               "id": 7,
+               "name": "#2",
+               "timing":0.032973,
+               "cycles_per_tuple": "NULL" ,
+               "sample_size": 60595,
+               "input_size": 5916591,
+               "extra_info": "projection"
+             },
+             {
+               "annotation": "ExpressionRoot",
+               "id": 8,
+               "name": "#3",
+               "timing":0.024892,
+               "cycles_per_tuple": "NULL" ,
+               "sample_size": 58534,
+               "input_size": 5916591,
+               "extra_info": "projection"
+             },
+             {
+               "annotation": "ExpressionRoot",
+               "id": 9,
+               "name": "#6",
+               "timing":0.028525,
+               "cycles_per_tuple": "NULL" ,
+               "sample_size": 55530,
+               "input_size": 5916591,
+               "extra_info": "projection"
+             }
+            ],
+            "children": [
+             {
+               "name": "PROJECTION",
+               "timing":0.013774,
+               "cardinality":5916591,
+               "extra_info": "l_returnflag\nl_linestatus\nl_quantity\nl_extendedprice\n*(l_extendedprice, -(1.00, l_discount))\nl_tax\nl_discount\n",
+               "timings": [
+                 {
+                  "annotation": "ExpressionRoot",
+                  "id": 1,
+                  "name": "#0",
+                  "timing":0.022365,
+                  "cycles_per_tuple": "NULL" ,
+                  "sample_size": 61480,
+                  "input_size": 5916591,
+                  "extra_info": "projection"
+                },
+                {
+                  "annotation": "ExpressionRoot",
+                  "id": 2,
+                  "name": "#1",
+                  "timing":0.028254,
+                  "cycles_per_tuple": "NULL" ,
+                  "sample_size": 57478,
+                  "input_size": 5916591,
+                  "extra_info": "projection"
+                },
+                {
+                  "annotation": "ExpressionRoot",
+                  "id": 3,
+                  "name": "#2",
+                  "timing":0.031357,
+                  "cycles_per_tuple": "NULL" ,
+                  "sample_size": 62537,
+                  "input_size": 5916591,
+                  "extra_info": "projection"
+                },
+                {
+                  "annotation": "ExpressionRoot",
+                  "id": 4,
+                  "name": "#3",
+                  "timing":0.025593,
+                  "cycles_per_tuple": "NULL" ,
+                  "sample_size": 58531,
+                  "input_size": 5916591,
+                  "extra_info": "projection"
+                },
+                {
+                  "annotation": "ExpressionRoot",
+                  "id": 5,
+                  "name": "*(l_extendedprice, -(1.00, l_discount))",
+                  "timing":2.452191,
+                  "cycles_per_tuple": "NULL" ,
+                  "sample_size": 56600,
+                  "input_size": 5916591,
+                  "extra_info": "projection"
+                },
+                {
+                  "annotation": "Function",
+                  "id": 1,
+                  "name": "*",
+                  "timing":0.779728,
+                  "cycles_per_tuple": "NULL" ,
+                  "sample_size": 61079,
+                  "input_size": 5916591,
+                  "extra_info": ""
+                },
+                {
+                  "annotation": "Function",
+                  "id": 2,
+                  "name": "-",
+                  "timing":1.361839,
+                  "cycles_per_tuple": "NULL" ,
+                  "sample_size": 61555,
+                  "input_size": 5916591,
+                  "extra_info": ""
+                },
+                {
+                  "annotation": "ExpressionRoot",
+                  "id": 6,
+                  "name": "#5",
+                  "timing":0.041211,
+                  "cycles_per_tuple": "NULL" ,
+                  "sample_size": 62605,
+                  "input_size": 5916591,
+                  "extra_info": "projection"
+                },
+                {
+                  "annotation": "ExpressionRoot",
+                  "id": 7,
+                  "name": "#4",
+                  "timing":0.027593,
+                  "cycles_per_tuple": "NULL" ,
+                  "sample_size": 60559,
+                  "input_size": 5916591,
+                  "extra_info": "projection"
+                }
+               ],
+               "children": [
+                {
+                  "name": "SEQ_SCAN",
+                  "timing":0.061537,
+                  "cardinality":5916591,
+                  "extra_info": "lineitem\n[INFOSEPARATOR]\nl_returnflag\nl_linestatus\nl_quantity\nl_extendedprice\nl_discount\nl_tax\nl_shipdate\n[INFOSEPARATOR]\nFilters: l_shipdate<=1998-09-02 AND l_shipdate IS NOT NULL\n",
+                  "timings": [
+                  ],
+                  "children": [
+                  ]
+                }
+               ]
+             }
+            ]
+          }
+         ]
+       }
+      ]
+    }
+   ]
+}

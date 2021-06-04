@@ -1,0 +1,226 @@
+{
+   "name":  "Query", 
+   "result": 0.100152,
+   "timing": 0.100152,
+   "cardinality": 5,
+   "extra-info": "SELECT\n    o_orderpriority,\n    count(*) AS order_count\nFROM\n    orders\nWHERE\n    o_orderdate >= CAST('1993-07-01' AS date)\n    AND o_orderdate < CAST('1993-10-01' AS date)\n    AND EXISTS (\n        SELECT\n            *\n        FROM\n            lineitem\n        WHERE\n            l_orderkey = o_orderkey\n            AND l_commitdate < l_receiptdate)\nGROUP BY\n    o_orderpriority\nORDER BY\n    o_orderpriority;\n\t\n\n", 
+   "timings": [
+   {
+   "annotation": "optimizer", 
+   "timing": 0.000302
+   },
+   {
+   "annotation": "optimizer > column_lifetime", 
+   "timing": 0.000003
+   },
+   {
+   "annotation": "optimizer > common_aggregate", 
+   "timing": 0.000001
+   },
+   {
+   "annotation": "optimizer > common_subexpressions", 
+   "timing": 0.000001
+   },
+   {
+   "annotation": "optimizer > deliminator", 
+   "timing": 0.000007
+   },
+   {
+   "annotation": "optimizer > expression_rewriter", 
+   "timing": 0.000150
+   },
+   {
+   "annotation": "optimizer > filter_pullup", 
+   "timing": 0.000001
+   },
+   {
+   "annotation": "optimizer > filter_pushdown", 
+   "timing": 0.000113
+   },
+   {
+   "annotation": "optimizer > in_clause", 
+   "timing": 0.000000
+   },
+   {
+   "annotation": "optimizer > join_order", 
+   "timing": 0.000003
+   },
+   {
+   "annotation": "optimizer > regex_range", 
+   "timing": 0.000000
+   },
+   {
+   "annotation": "optimizer > reorder_filter", 
+   "timing": 0.000002
+   },
+   {
+   "annotation": "optimizer > statistics_propagation", 
+   "timing": 0.000009
+   },
+   {
+   "annotation": "optimizer > top_n", 
+   "timing": 0.000000
+   },
+   {
+   "annotation": "optimizer > unused_columns", 
+   "timing": 0.000005
+   },
+   {
+   "annotation": "physical_planner", 
+   "timing": 0.000014
+   },
+   {
+   "annotation": "physical_planner > column_binding", 
+   "timing": 0.000003
+   },
+   {
+   "annotation": "physical_planner > create_plan", 
+   "timing": 0.000006
+   },
+   {
+   "annotation": "physical_planner > resolve_types", 
+   "timing": 0.000001
+   },
+   {
+   "annotation": "planner", 
+   "timing": 0.000082
+   },
+   {
+   "annotation": "planner > binder", 
+   "timing": 0.000081
+   }
+   ],
+   "children": [
+    {
+      "name": "ORDER_BY",
+      "timing":0.000020,
+      "cardinality":5,
+      "extra_info": "#0 ASC",
+      "timings": [
+      ],
+      "children": [
+       {
+         "name": "HASH_GROUP_BY",
+         "timing":0.001091,
+         "cardinality":5,
+         "extra_info": "#0\ncount_star()",
+         "timings": [
+         ],
+         "children": [
+          {
+            "name": "PROJECTION",
+            "timing":0.000016,
+            "cardinality":52523,
+            "extra_info": "o_orderpriority\n",
+            "timings": [
+              {
+               "annotation": "ExpressionRoot",
+               "id": 1,
+               "name": "#0",
+               "timing":0.000000,
+               "cycles_per_tuple": "NULL" ,
+               "sample_size": 983,
+               "input_size": 52523,
+               "extra_info": "projection"
+             }
+            ],
+            "children": [
+             {
+               "name": "HASH_JOIN",
+               "timing":0.057428,
+               "cardinality":52523,
+               "extra_info": "SEMI\no_orderkey=o_orderkey\n",
+               "timings": [
+                 {
+                  "annotation": "ExpressionRoot",
+                  "id": 1,
+                  "name": "#2",
+                  "timing":5.250450,
+                  "cycles_per_tuple": "NULL" ,
+                  "sample_size": 555,
+                  "input_size": 57218,
+                  "extra_info": "probe_executor"
+                },
+                {
+                  "annotation": "ExpressionRoot",
+                  "id": 2,
+                  "name": "#0",
+                  "timing":0.279459,
+                  "cycles_per_tuple": "NULL" ,
+                  "sample_size": 38324,
+                  "input_size": 3793296,
+                  "extra_info": "build_executor"
+                }
+               ],
+               "children": [
+                {
+                  "name": "SEQ_SCAN",
+                  "timing":0.021042,
+                  "cardinality":57218,
+                  "extra_info": "orders\n[INFOSEPARATOR]\no_orderpriority\no_orderdate\no_orderkey\n[INFOSEPARATOR]\nFilters: o_orderdate>=1993-07-01 AND o_orderdate<1993-10-01 AND o_orderdate IS NOT NULL\n",
+                  "timings": [
+                  ],
+                  "children": [
+                  ]
+                }
+,
+                {
+                  "name": "PROJECTION",
+                  "timing":0.002520,
+                  "cardinality":7586592,
+                  "extra_info": "#0\n",
+                  "timings": [
+                    {
+                     "annotation": "ExpressionRoot",
+                     "id": 1,
+                     "name": "#0",
+                     "timing":0.041413,
+                     "cycles_per_tuple": "NULL" ,
+                     "sample_size": 38273,
+                     "input_size": 3793296,
+                     "extra_info": "projection"
+                   }
+                  ],
+                  "children": [
+                   {
+                     "name": "FILTER",
+                     "timing":0.012418,
+                     "cardinality":7586592,
+                     "extra_info": "l_commitdate<l_receiptdate",
+                     "timings": [
+                       {
+                        "annotation": "ExpressionRoot",
+                        "id": 1,
+                        "name": "l_commitdate<l_receiptdate",
+                        "timing":1.179279,
+                        "cycles_per_tuple": "NULL" ,
+                        "sample_size": 56320,
+                        "input_size": 6001215,
+                        "extra_info": "executor"
+                      }
+                     ],
+                     "children": [
+                      {
+                        "name": "SEQ_SCAN",
+                        "timing":0.013664,
+                        "cardinality":12002430,
+                        "extra_info": "lineitem\n[INFOSEPARATOR]\nl_orderkey\nl_commitdate\nl_receiptdate",
+                        "timings": [
+                        ],
+                        "children": [
+                        ]
+                      }
+                     ]
+                   }
+                  ]
+                }
+               ]
+             }
+            ]
+          }
+         ]
+       }
+      ]
+    }
+   ]
+}

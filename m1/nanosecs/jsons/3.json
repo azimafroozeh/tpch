@@ -1,0 +1,327 @@
+{
+   "name":  "Query", 
+   "result": 0.122297,
+   "timing": 0.122297,
+   "cardinality": 10,
+   "extra-info": "SELECT\n    l_orderkey,\n    sum(l_extendedprice * (1 - l_discount)) AS revenue,\n    o_orderdate,\n    o_shippriority\nFROM\n    customer,\n    orders,\n    lineitem\nWHERE\n    c_mktsegment = 'BUILDING'\n    AND c_custkey = o_custkey\n    AND l_orderkey = o_orderkey\n    AND o_orderdate < CAST('1995-03-15' AS date)\n    AND l_shipdate > CAST('1995-03-15' AS date)\nGROUP BY\n    l_orderkey,\n    o_orderdate,\n    o_shippriority\nORDER BY\n    revenue DESC,\n    o_orderdate\nLIMIT 10;\n\t\n\n", 
+   "timings": [
+   {
+   "annotation": "optimizer", 
+   "timing": 0.000423
+   },
+   {
+   "annotation": "optimizer > column_lifetime", 
+   "timing": 0.000004
+   },
+   {
+   "annotation": "optimizer > common_aggregate", 
+   "timing": 0.000001
+   },
+   {
+   "annotation": "optimizer > common_subexpressions", 
+   "timing": 0.000002
+   },
+   {
+   "annotation": "optimizer > deliminator", 
+   "timing": 0.000000
+   },
+   {
+   "annotation": "optimizer > expression_rewriter", 
+   "timing": 0.000209
+   },
+   {
+   "annotation": "optimizer > filter_pullup", 
+   "timing": 0.000001
+   },
+   {
+   "annotation": "optimizer > filter_pushdown", 
+   "timing": 0.000148
+   },
+   {
+   "annotation": "optimizer > in_clause", 
+   "timing": 0.000001
+   },
+   {
+   "annotation": "optimizer > join_order", 
+   "timing": 0.000028
+   },
+   {
+   "annotation": "optimizer > regex_range", 
+   "timing": 0.000000
+   },
+   {
+   "annotation": "optimizer > reorder_filter", 
+   "timing": 0.000002
+   },
+   {
+   "annotation": "optimizer > statistics_propagation", 
+   "timing": 0.000015
+   },
+   {
+   "annotation": "optimizer > top_n", 
+   "timing": 0.000001
+   },
+   {
+   "annotation": "optimizer > unused_columns", 
+   "timing": 0.000004
+   },
+   {
+   "annotation": "physical_planner", 
+   "timing": 0.000017
+   },
+   {
+   "annotation": "physical_planner > column_binding", 
+   "timing": 0.000005
+   },
+   {
+   "annotation": "physical_planner > create_plan", 
+   "timing": 0.000008
+   },
+   {
+   "annotation": "physical_planner > resolve_types", 
+   "timing": 0.000002
+   },
+   {
+   "annotation": "planner", 
+   "timing": 0.000104
+   },
+   {
+   "annotation": "planner > binder", 
+   "timing": 0.000101
+   }
+   ],
+   "children": [
+    {
+      "name": "TOP_N",
+      "timing":0.000177,
+      "cardinality":10,
+      "extra_info": "Top 10\n[INFOSEPARATOR]\n#1 DESC\n#2 ASC",
+      "timings": [
+      ],
+      "children": [
+       {
+         "name": "PROJECTION",
+         "timing":0.000000,
+         "cardinality":11620,
+         "extra_info": "l_orderkey\nrevenue\no_orderdate\no_shippriority\n",
+         "timings": [
+           {
+            "annotation": "ExpressionRoot",
+            "id": 1,
+            "name": "#0",
+            "timing":0.203125,
+            "cycles_per_tuple": "NULL" ,
+            "sample_size": 1024,
+            "input_size": 11620,
+            "extra_info": "projection"
+          },
+          {
+            "annotation": "ExpressionRoot",
+            "id": 2,
+            "name": "#3",
+            "timing":0.041016,
+            "cycles_per_tuple": "NULL" ,
+            "sample_size": 1024,
+            "input_size": 11620,
+            "extra_info": "projection"
+          },
+          {
+            "annotation": "ExpressionRoot",
+            "id": 3,
+            "name": "#1",
+            "timing":0.000000,
+            "cycles_per_tuple": "NULL" ,
+            "sample_size": 1024,
+            "input_size": 11620,
+            "extra_info": "projection"
+          },
+          {
+            "annotation": "ExpressionRoot",
+            "id": 4,
+            "name": "#2",
+            "timing":0.000000,
+            "cycles_per_tuple": "NULL" ,
+            "sample_size": 1024,
+            "input_size": 11620,
+            "extra_info": "projection"
+          }
+         ],
+         "children": [
+          {
+            "name": "HASH_GROUP_BY",
+            "timing":0.001431,
+            "cardinality":11620,
+            "extra_info": "#0\n#1\n#2\nsum(#3)",
+            "timings": [
+            ],
+            "children": [
+             {
+               "name": "PROJECTION",
+               "timing":0.000289,
+               "cardinality":30519,
+               "extra_info": "l_orderkey\no_orderdate\no_shippriority\n*(l_extendedprice, -(1.00, l_discount))\n",
+               "timings": [
+                 {
+                  "annotation": "ExpressionRoot",
+                  "id": 1,
+                  "name": "#0",
+                  "timing":0.413907,
+                  "cycles_per_tuple": "NULL" ,
+                  "sample_size": 302,
+                  "input_size": 30519,
+                  "extra_info": "projection"
+                },
+                {
+                  "annotation": "ExpressionRoot",
+                  "id": 2,
+                  "name": "#4",
+                  "timing":0.281879,
+                  "cycles_per_tuple": "NULL" ,
+                  "sample_size": 298,
+                  "input_size": 30519,
+                  "extra_info": "projection"
+                },
+                {
+                  "annotation": "ExpressionRoot",
+                  "id": 3,
+                  "name": "#5",
+                  "timing":0.282759,
+                  "cycles_per_tuple": "NULL" ,
+                  "sample_size": 290,
+                  "input_size": 30519,
+                  "extra_info": "projection"
+                },
+                {
+                  "annotation": "ExpressionRoot",
+                  "id": 4,
+                  "name": "*(l_extendedprice, -(1.00, l_discount))",
+                  "timing":8.897331,
+                  "cycles_per_tuple": "NULL" ,
+                  "sample_size": 487,
+                  "input_size": 30519,
+                  "extra_info": "projection"
+                },
+                {
+                  "annotation": "Function",
+                  "id": 1,
+                  "name": "*",
+                  "timing":2.412037,
+                  "cycles_per_tuple": "NULL" ,
+                  "sample_size": 432,
+                  "input_size": 30519,
+                  "extra_info": ""
+                },
+                {
+                  "annotation": "Function",
+                  "id": 2,
+                  "name": "-",
+                  "timing":3.427632,
+                  "cycles_per_tuple": "NULL" ,
+                  "sample_size": 304,
+                  "input_size": 30519,
+                  "extra_info": ""
+                }
+               ],
+               "children": [
+                {
+                  "name": "HASH_JOIN",
+                  "timing":0.003865,
+                  "cardinality":30519,
+                  "extra_info": "INNER\no_custkey=c_custkey\n",
+                  "timings": [
+                    {
+                     "annotation": "ExpressionRoot",
+                     "id": 1,
+                     "name": "#6",
+                     "timing":0.107788,
+                     "cycles_per_tuple": "NULL" ,
+                     "sample_size": 1939,
+                     "input_size": 151331,
+                     "extra_info": "probe_executor"
+                   },
+                   {
+                     "annotation": "ExpressionRoot",
+                     "id": 2,
+                     "name": "#1",
+                     "timing":1.388095,
+                     "cycles_per_tuple": "NULL" ,
+                     "sample_size": 420,
+                     "input_size": 30142,
+                     "extra_info": "build_executor"
+                   }
+                  ],
+                  "children": [
+                   {
+                     "name": "HASH_JOIN",
+                     "timing":0.079052,
+                     "cardinality":151331,
+                     "extra_info": "INNER\nl_orderkey=o_orderkey\n",
+                     "timings": [
+                       {
+                        "annotation": "ExpressionRoot",
+                        "id": 1,
+                        "name": "#0",
+                        "timing":0.325372,
+                        "cycles_per_tuple": "NULL" ,
+                        "sample_size": 33162,
+                        "input_size": 3241776,
+                        "extra_info": "probe_executor"
+                      },
+                      {
+                        "annotation": "ExpressionRoot",
+                        "id": 2,
+                        "name": "#3",
+                        "timing":0.236305,
+                        "cycles_per_tuple": "NULL" ,
+                        "sample_size": 6517,
+                        "input_size": 727305,
+                        "extra_info": "build_executor"
+                      }
+                     ],
+                     "children": [
+                      {
+                        "name": "SEQ_SCAN",
+                        "timing":0.025834,
+                        "cardinality":3241776,
+                        "extra_info": "lineitem\n[INFOSEPARATOR]\nl_orderkey\nl_extendedprice\nl_discount\nl_shipdate\n[INFOSEPARATOR]\nFilters: l_shipdate>1995-03-15 AND l_shipdate IS NOT NULL\n",
+                        "timings": [
+                        ],
+                        "children": [
+                        ]
+                      }
+,
+                      {
+                        "name": "SEQ_SCAN",
+                        "timing":0.021590,
+                        "cardinality":1454610,
+                        "extra_info": "orders\n[INFOSEPARATOR]\no_orderdate\no_shippriority\no_custkey\no_orderkey\n[INFOSEPARATOR]\nFilters: o_orderdate<1995-03-15 AND o_orderdate IS NOT NULL\n",
+                        "timings": [
+                        ],
+                        "children": [
+                        ]
+                      }
+                     ]
+                   }
+,
+                   {
+                     "name": "SEQ_SCAN",
+                     "timing":0.003420,
+                     "cardinality":60284,
+                     "extra_info": "customer\n[INFOSEPARATOR]\nc_mktsegment\nc_custkey\n[INFOSEPARATOR]\nFilters: c_mktsegment=BUILDING AND c_mktsegment IS NOT NULL\n",
+                     "timings": [
+                     ],
+                     "children": [
+                     ]
+                   }
+                  ]
+                }
+               ]
+             }
+            ]
+          }
+         ]
+       }
+      ]
+    }
+   ]
+}
