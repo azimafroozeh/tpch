@@ -1,0 +1,306 @@
+{
+   "name":  "Query", 
+   "result": 0.056580,
+   "timing": 0.056580,
+   "cardinality": 1,
+   "extra-info": "SELECT\n    100.00 * sum(\n        CASE WHEN p_type LIKE 'PROMO%' THEN\n            l_extendedprice * (1 - l_discount)\n        ELSE\n            0\n        END) / sum(l_extendedprice * (1 - l_discount)) AS promo_revenue\nFROM\n    lineitem,\n    part\nWHERE\n    l_partkey = p_partkey\n    AND l_shipdate >= date '1995-09-01'\n    AND l_shipdate < CAST('1995-10-01' AS date);\n\t\n\n", 
+   "timings": [
+   {
+   "annotation": "optimizer", 
+   "timing": 0.000500
+   },
+   {
+   "annotation": "optimizer > column_lifetime", 
+   "timing": 0.000002
+   },
+   {
+   "annotation": "optimizer > common_aggregate", 
+   "timing": 0.000001
+   },
+   {
+   "annotation": "optimizer > common_subexpressions", 
+   "timing": 0.000009
+   },
+   {
+   "annotation": "optimizer > deliminator", 
+   "timing": 0.000000
+   },
+   {
+   "annotation": "optimizer > expression_rewriter", 
+   "timing": 0.000369
+   },
+   {
+   "annotation": "optimizer > filter_pullup", 
+   "timing": 0.000001
+   },
+   {
+   "annotation": "optimizer > filter_pushdown", 
+   "timing": 0.000084
+   },
+   {
+   "annotation": "optimizer > in_clause", 
+   "timing": 0.000000
+   },
+   {
+   "annotation": "optimizer > join_order", 
+   "timing": 0.000012
+   },
+   {
+   "annotation": "optimizer > regex_range", 
+   "timing": 0.000001
+   },
+   {
+   "annotation": "optimizer > reorder_filter", 
+   "timing": 0.000002
+   },
+   {
+   "annotation": "optimizer > statistics_propagation", 
+   "timing": 0.000011
+   },
+   {
+   "annotation": "optimizer > top_n", 
+   "timing": 0.000000
+   },
+   {
+   "annotation": "optimizer > unused_columns", 
+   "timing": 0.000003
+   },
+   {
+   "annotation": "physical_planner", 
+   "timing": 0.000011
+   },
+   {
+   "annotation": "physical_planner > column_binding", 
+   "timing": 0.000003
+   },
+   {
+   "annotation": "physical_planner > create_plan", 
+   "timing": 0.000005
+   },
+   {
+   "annotation": "physical_planner > resolve_types", 
+   "timing": 0.000001
+   },
+   {
+   "annotation": "planner", 
+   "timing": 0.000089
+   },
+   {
+   "annotation": "planner > binder", 
+   "timing": 0.000085
+   }
+   ],
+   "children": [
+    {
+      "name": "PROJECTION",
+      "timing":0.000006,
+      "cardinality":1,
+      "extra_info": "promo_revenue\n",
+      "timings": [
+        {
+         "annotation": "ExpressionRoot",
+         "id": 1,
+         "name": "/(CAST(*(100.00, sum(CASE WHEN (~~(p_type, PROMO%)) THEN (*(l_extendedprice, -(CAST(1 AS DECIMAL(16,2)), l_discount))) ELSE (CAST(0 AS DECIMAL(18,4))))) AS DOUBLE), CAST(sum(*(l_extendedprice, -(CAST(1 AS DECIMAL(16,2)), l_discount))) AS DOUBLE))",
+         "timing": "NULL" ,
+         "cycles_per_tuple": 107.0000,
+         "sample_size": 1,
+         "input_size": 1,
+         "extra_info": "projection"
+       },
+       {
+         "annotation": "Function",
+         "id": 1,
+         "name": "/",
+         "timing": "NULL" ,
+         "cycles_per_tuple": 6.0000,
+         "sample_size": 1,
+         "input_size": 1,
+         "extra_info": ""
+       },
+       {
+         "annotation": "Function",
+         "id": 2,
+         "name": "*",
+         "timing": "NULL" ,
+         "cycles_per_tuple": 18.0000,
+         "sample_size": 1,
+         "input_size": 1,
+         "extra_info": ""
+       }
+      ],
+      "children": [
+       {
+         "name": "SIMPLE_AGGREGATE",
+         "timing":0.000203,
+         "cardinality":1,
+         "extra_info": "sum(#0)\nsum(#1)",
+         "timings": [
+           {
+            "annotation": "ExpressionRoot",
+            "id": 1,
+            "name": "#0",
+            "timing": "NULL" ,
+            "cycles_per_tuple": 0.0010,
+            "sample_size": 964,
+            "input_size": 75983,
+            "extra_info": "child_executor"
+          },
+          {
+            "annotation": "ExpressionRoot",
+            "id": 2,
+            "name": "#1",
+            "timing": "NULL" ,
+            "cycles_per_tuple": 0.0000,
+            "sample_size": 1933,
+            "input_size": 75983,
+            "extra_info": "child_executor"
+          }
+         ],
+         "children": [
+          {
+            "name": "PROJECTION",
+            "timing":0.000990,
+            "cardinality":151966,
+            "extra_info": "CASE WHEN (prefix(p_type, PROMO)) THEN (#1) ELSE (0.0000)\n#1\n",
+            "timings": [
+              {
+               "annotation": "ExpressionRoot",
+               "id": 1,
+               "name": "CASE WHEN (prefix(p_type, PROMO)) THEN (#1) ELSE (0.0000)",
+               "timing": "NULL" ,
+               "cycles_per_tuple": 0.2002,
+               "sample_size": 964,
+               "input_size": 75983,
+               "extra_info": "projection"
+             },
+             {
+               "annotation": "Function",
+               "id": 1,
+               "name": "prefix",
+               "timing": "NULL" ,
+               "cycles_per_tuple": 0.0737,
+               "sample_size": 964,
+               "input_size": 75983,
+               "extra_info": ""
+             },
+             {
+               "annotation": "ExpressionRoot",
+               "id": 2,
+               "name": "#1",
+               "timing": "NULL" ,
+               "cycles_per_tuple": 0.0010,
+               "sample_size": 964,
+               "input_size": 75983,
+               "extra_info": "projection"
+             }
+            ],
+            "children": [
+             {
+               "name": "PROJECTION",
+               "timing":0.000206,
+               "cardinality":151966,
+               "extra_info": "p_type\n*(l_extendedprice, -(1.00, l_discount))\n",
+               "timings": [
+                 {
+                  "annotation": "ExpressionRoot",
+                  "id": 1,
+                  "name": "#4",
+                  "timing": "NULL" ,
+                  "cycles_per_tuple": 0.0005,
+                  "sample_size": 1933,
+                  "input_size": 75983,
+                  "extra_info": "projection"
+                },
+                {
+                  "annotation": "ExpressionRoot",
+                  "id": 2,
+                  "name": "*(l_extendedprice, -(1.00, l_discount))",
+                  "timing": "NULL" ,
+                  "cycles_per_tuple": 0.0519,
+                  "sample_size": 964,
+                  "input_size": 75983,
+                  "extra_info": "projection"
+                },
+                {
+                  "annotation": "Function",
+                  "id": 1,
+                  "name": "*",
+                  "timing": "NULL" ,
+                  "cycles_per_tuple": 0.0197,
+                  "sample_size": 964,
+                  "input_size": 75983,
+                  "extra_info": ""
+                },
+                {
+                  "annotation": "Function",
+                  "id": 2,
+                  "name": "-",
+                  "timing": "NULL" ,
+                  "cycles_per_tuple": 0.0120,
+                  "sample_size": 1924,
+                  "input_size": 75983,
+                  "extra_info": ""
+                }
+               ],
+               "children": [
+                {
+                  "name": "HASH_JOIN",
+                  "timing":0.049482,
+                  "cardinality":151966,
+                  "extra_info": "INNER\nl_partkey=p_partkey\n",
+                  "timings": [
+                    {
+                     "annotation": "ExpressionRoot",
+                     "id": 1,
+                     "name": "#2",
+                     "timing": "NULL" ,
+                     "cycles_per_tuple": 0.3691,
+                     "sample_size": 680,
+                     "input_size": 75983,
+                     "extra_info": "probe_executor"
+                   },
+                   {
+                     "annotation": "ExpressionRoot",
+                     "id": 2,
+                     "name": "#1",
+                     "timing": "NULL" ,
+                     "cycles_per_tuple": 0.0020,
+                     "sample_size": 2048,
+                     "input_size": 200000,
+                     "extra_info": "build_executor"
+                   }
+                  ],
+                  "children": [
+                   {
+                     "name": "SEQ_SCAN",
+                     "timing":0.057052,
+                     "cardinality":151966,
+                     "extra_info": "lineitem\n[INFOSEPARATOR]\nl_extendedprice\nl_discount\nl_partkey\nl_shipdate\n[INFOSEPARATOR]\nFilters: l_shipdate>=1995-09-01 AND l_shipdate<1995-10-01 AND l_shipdate IS NOT NULL\n",
+                     "timings": [
+                     ],
+                     "children": [
+                     ]
+                   }
+,
+                   {
+                     "name": "SEQ_SCAN",
+                     "timing":0.000882,
+                     "cardinality":400000,
+                     "extra_info": "part\n[INFOSEPARATOR]\np_type\np_partkey",
+                     "timings": [
+                     ],
+                     "children": [
+                     ]
+                   }
+                  ]
+                }
+               ]
+             }
+            ]
+          }
+         ]
+       }
+      ]
+    }
+   ]
+}

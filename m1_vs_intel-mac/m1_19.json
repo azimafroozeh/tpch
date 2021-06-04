@@ -1,0 +1,326 @@
+{
+   "name":  "Query", 
+   "result": 0.228175,
+   "timing": 0.228175,
+   "cardinality": 1,
+   "extra-info": "SELECT\n    sum(l_extendedprice * (1 - l_discount)) AS revenue\nFROM\n    lineitem,\n    part\nWHERE (p_partkey = l_partkey\n    AND p_brand = 'Brand#12'\n    AND p_container IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG')\n    AND l_quantity >= 1\n    AND l_quantity <= 1 + 10\n    AND p_size BETWEEN 1 AND 5\n    AND l_shipmode IN ('AIR', 'AIR REG')\n    AND l_shipinstruct = 'DELIVER IN PERSON')\n    OR (p_partkey = l_partkey\n        AND p_brand = 'Brand#23'\n        AND p_container IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK')\n        AND l_quantity >= 10\n        AND l_quantity <= 10 + 10\n        AND p_size BETWEEN 1 AND 10\n        AND l_shipmode IN ('AIR', 'AIR REG')\n        AND l_shipinstruct = 'DELIVER IN PERSON')\n    OR (p_partkey = l_partkey\n        AND p_brand = 'Brand#34'\n        AND p_container IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG')\n        AND l_quantity >= 20\n        AND l_quantity <= 20 + 10\n        AND p_size BETWEEN 1 AND 15\n        AND l_shipmode IN ('AIR', 'AIR REG')\n        AND l_shipinstruct = 'DELIVER IN PERSON');\n\t\n\n", 
+   "timings": [
+   {
+   "annotation": "optimizer", 
+   "timing": 0.000912
+   },
+   {
+   "annotation": "optimizer > column_lifetime", 
+   "timing": 0.000011
+   },
+   {
+   "annotation": "optimizer > common_aggregate", 
+   "timing": 0.000002
+   },
+   {
+   "annotation": "optimizer > common_subexpressions", 
+   "timing": 0.000003
+   },
+   {
+   "annotation": "optimizer > deliminator", 
+   "timing": 0.000000
+   },
+   {
+   "annotation": "optimizer > expression_rewriter", 
+   "timing": 0.000733
+   },
+   {
+   "annotation": "optimizer > filter_pullup", 
+   "timing": 0.000000
+   },
+   {
+   "annotation": "optimizer > filter_pushdown", 
+   "timing": 0.000102
+   },
+   {
+   "annotation": "optimizer > in_clause", 
+   "timing": 0.000003
+   },
+   {
+   "annotation": "optimizer > join_order", 
+   "timing": 0.000021
+   },
+   {
+   "annotation": "optimizer > regex_range", 
+   "timing": 0.000000
+   },
+   {
+   "annotation": "optimizer > reorder_filter", 
+   "timing": 0.000006
+   },
+   {
+   "annotation": "optimizer > statistics_propagation", 
+   "timing": 0.000020
+   },
+   {
+   "annotation": "optimizer > top_n", 
+   "timing": 0.000000
+   },
+   {
+   "annotation": "optimizer > unused_columns", 
+   "timing": 0.000005
+   },
+   {
+   "annotation": "physical_planner", 
+   "timing": 0.000019
+   },
+   {
+   "annotation": "physical_planner > column_binding", 
+   "timing": 0.000007
+   },
+   {
+   "annotation": "physical_planner > create_plan", 
+   "timing": 0.000006
+   },
+   {
+   "annotation": "physical_planner > resolve_types", 
+   "timing": 0.000002
+   },
+   {
+   "annotation": "planner", 
+   "timing": 0.000073
+   },
+   {
+   "annotation": "planner > binder", 
+   "timing": 0.000071
+   }
+   ],
+   "children": [
+    {
+      "name": "SIMPLE_AGGREGATE",
+      "timing":0.000025,
+      "cardinality":1,
+      "extra_info": "sum(#0)",
+      "timings": [
+        {
+         "annotation": "ExpressionRoot",
+         "id": 1,
+         "name": "#0",
+         "timing": "NULL" ,
+         "cycles_per_tuple": 0.5000,
+         "sample_size": 2,
+         "input_size": 121,
+         "extra_info": "child_executor"
+       }
+      ],
+      "children": [
+       {
+         "name": "PROJECTION",
+         "timing":0.000184,
+         "cardinality":242,
+         "extra_info": "*(l_extendedprice, -(1.00, l_discount))\n",
+         "timings": [
+           {
+            "annotation": "ExpressionRoot",
+            "id": 1,
+            "name": "*(l_extendedprice, -(1.00, l_discount))",
+            "timing": "NULL" ,
+            "cycles_per_tuple": 32.0000,
+            "sample_size": 1,
+            "input_size": 121,
+            "extra_info": "projection"
+          },
+          {
+            "annotation": "Function",
+            "id": 1,
+            "name": "*",
+            "timing": "NULL" ,
+            "cycles_per_tuple": 8.0000,
+            "sample_size": 1,
+            "input_size": 121,
+            "extra_info": ""
+          },
+          {
+            "annotation": "Function",
+            "id": 2,
+            "name": "-",
+            "timing": "NULL" ,
+            "cycles_per_tuple": 8.3333,
+            "sample_size": 3,
+            "input_size": 121,
+            "extra_info": ""
+          }
+         ],
+         "children": [
+          {
+            "name": "PROJECTION",
+            "timing":0.000184,
+            "cardinality":242,
+            "extra_info": "#0\n#1\n",
+            "timings": [
+              {
+               "annotation": "ExpressionRoot",
+               "id": 1,
+               "name": "#0",
+               "timing": "NULL" ,
+               "cycles_per_tuple": 0.0000,
+               "sample_size": 1,
+               "input_size": 121,
+               "extra_info": "projection"
+             },
+             {
+               "annotation": "ExpressionRoot",
+               "id": 2,
+               "name": "#1",
+               "timing": "NULL" ,
+               "cycles_per_tuple": 0.0000,
+               "sample_size": 1,
+               "input_size": 121,
+               "extra_info": "projection"
+             }
+            ],
+            "children": [
+             {
+               "name": "FILTER",
+               "timing":0.010422,
+               "cardinality":242,
+               "extra_info": "((True AND l_quantity<=11 AND p_size<=5 AND p_brand=Brand#12 AND (p_container=SM CASE OR p_container=SM BOX OR p_container=SM PACK OR p_container=SM PKG)) OR (l_quantity>=10 AND l_quantity<=20 AND p_size<=10 AND p_brand=Brand#23 AND (p_container=MED BAG OR p_container=MED BOX OR p_container=MED PKG OR p_container=MED PACK)) OR (l_quantity>=20 AND l_quantity<=30 AND p_size<=15 AND p_brand=Brand#34 AND (p_container=LG CASE OR p_container=LG BOX OR p_container=LG PACK OR p_container=LG PKG)))",
+               "timings": [
+                 {
+                  "annotation": "ExpressionRoot",
+                  "id": 1,
+                  "name": "((True AND l_quantity<=11 AND p_size<=5 AND p_brand=Brand#12 AND (p_container=SM CASE OR p_container=SM BOX OR p_container=SM PACK OR p_container=SM PKG)) OR (l_quantity>=10 AND l_quantity<=20 AND p_size<=10 AND p_brand=Brand#23 AND (p_container=MED BAG OR p_container=MED BOX OR p_container=MED PKG OR p_container=MED PACK)) OR (l_quantity>=20 AND l_quantity<=30 AND p_size<=15 AND p_brand=Brand#34 AND (p_container=LG CASE OR p_container=LG BOX OR p_container=LG PACK OR p_container=LG PKG)))",
+                  "timing": "NULL" ,
+                  "cycles_per_tuple": 0.6925,
+                  "sample_size": 1948,
+                  "input_size": 214377,
+                  "extra_info": "executor"
+                }
+               ],
+               "children": [
+                {
+                  "name": "HASH_JOIN",
+                  "timing":0.054286,
+                  "cardinality":428754,
+                  "extra_info": "INNER\nl_partkey=p_partkey\n",
+                  "timings": [
+                    {
+                     "annotation": "ExpressionRoot",
+                     "id": 1,
+                     "name": "#2",
+                     "timing": "NULL" ,
+                     "cycles_per_tuple": 0.1173,
+                     "sample_size": 2226,
+                     "input_size": 214377,
+                     "extra_info": "probe_executor"
+                   },
+                   {
+                     "annotation": "ExpressionRoot",
+                     "id": 2,
+                     "name": "#0",
+                     "timing": "NULL" ,
+                     "cycles_per_tuple": 0.0029,
+                     "sample_size": 2048,
+                     "input_size": 200000,
+                     "extra_info": "build_executor"
+                   }
+                  ],
+                  "children": [
+                   {
+                     "name": "PROJECTION",
+                     "timing":0.006432,
+                     "cardinality":428754,
+                     "extra_info": "#0\n#1\n#2\n#3\n",
+                     "timings": [
+                       {
+                        "annotation": "ExpressionRoot",
+                        "id": 1,
+                        "name": "#0",
+                        "timing": "NULL" ,
+                        "cycles_per_tuple": 0.0109,
+                        "sample_size": 2198,
+                        "input_size": 214377,
+                        "extra_info": "projection"
+                      },
+                      {
+                        "annotation": "ExpressionRoot",
+                        "id": 2,
+                        "name": "#1",
+                        "timing": "NULL" ,
+                        "cycles_per_tuple": 0.0082,
+                        "sample_size": 2434,
+                        "input_size": 214377,
+                        "extra_info": "projection"
+                      },
+                      {
+                        "annotation": "ExpressionRoot",
+                        "id": 3,
+                        "name": "#2",
+                        "timing": "NULL" ,
+                        "cycles_per_tuple": 0.0090,
+                        "sample_size": 2322,
+                        "input_size": 214377,
+                        "extra_info": "projection"
+                      },
+                      {
+                        "annotation": "ExpressionRoot",
+                        "id": 4,
+                        "name": "#3",
+                        "timing": "NULL" ,
+                        "cycles_per_tuple": 0.0083,
+                        "sample_size": 2172,
+                        "input_size": 214377,
+                        "extra_info": "projection"
+                      }
+                     ],
+                     "children": [
+                      {
+                        "name": "FILTER",
+                        "timing":0.036592,
+                        "cardinality":428754,
+                        "extra_info": "(l_shipmode=AIR OR l_shipmode=AIR REG)",
+                        "timings": [
+                          {
+                           "annotation": "ExpressionRoot",
+                           "id": 1,
+                           "name": "(l_shipmode=AIR OR l_shipmode=AIR REG)",
+                           "timing": "NULL" ,
+                           "cycles_per_tuple": 0.2261,
+                           "sample_size": 15755,
+                           "input_size": 1500048,
+                           "extra_info": "executor"
+                         }
+                        ],
+                        "children": [
+                         {
+                           "name": "SEQ_SCAN",
+                           "timing":0.333128,
+                           "cardinality":3000096,
+                           "extra_info": "lineitem\n[INFOSEPARATOR]\nl_extendedprice\nl_discount\nl_partkey\nl_quantity\nl_shipmode\nl_shipinstruct\n[INFOSEPARATOR]\nFilters: l_shipinstruct=DELIVER IN PERSON AND l_shipinstruct IS NOT NULL\n",
+                           "timings": [
+                           ],
+                           "children": [
+                           ]
+                         }
+                        ]
+                      }
+                     ]
+                   }
+,
+                   {
+                     "name": "SEQ_SCAN",
+                     "timing":0.005540,
+                     "cardinality":400000,
+                     "extra_info": "part\n[INFOSEPARATOR]\np_partkey\np_brand\np_container\np_size",
+                     "timings": [
+                     ],
+                     "children": [
+                     ]
+                   }
+                  ]
+                }
+               ]
+             }
+            ]
+          }
+         ]
+       }
+      ]
+    }
+   ]
+}
