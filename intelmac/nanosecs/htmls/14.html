@@ -19733,18 +19733,18 @@ div {
 })));</script>
 <script> var data = {
    "name":  "Query", 
-   "result": 0.113551,
-   "timing": 0.113551,
+   "result": 0.141637,
+   "timing": 0.141637,
    "cardinality": 1,
    "extra-info": "SELECT\n    100.00 * sum(\n        CASE WHEN p_type LIKE 'PROMO%' THEN\n            l_extendedprice * (1 - l_discount)\n        ELSE\n            0\n        END) / sum(l_extendedprice * (1 - l_discount)) AS promo_revenue\nFROM\n    lineitem,\n    part\nWHERE\n    l_partkey = p_partkey\n    AND l_shipdate >= date '1995-09-01'\n    AND l_shipdate < CAST('1995-10-01' AS date);\n\t\n\n", 
    "timings": [
    {
    "annotation": "optimizer", 
-   "timing": 0.001369
+   "timing": 0.001168
    },
    {
    "annotation": "optimizer > column_lifetime", 
-   "timing": 0.000005
+   "timing": 0.000006
    },
    {
    "annotation": "optimizer > common_aggregate", 
@@ -19752,23 +19752,23 @@ div {
    },
    {
    "annotation": "optimizer > common_subexpressions", 
-   "timing": 0.000020
+   "timing": 0.000019
    },
    {
    "annotation": "optimizer > deliminator", 
-   "timing": 0.000000
+   "timing": 0.000001
    },
    {
    "annotation": "optimizer > expression_rewriter", 
-   "timing": 0.001036
+   "timing": 0.000857
    },
    {
    "annotation": "optimizer > filter_pullup", 
-   "timing": 0.000000
+   "timing": 0.000001
    },
    {
    "annotation": "optimizer > filter_pushdown", 
-   "timing": 0.000210
+   "timing": 0.000196
    },
    {
    "annotation": "optimizer > in_clause", 
@@ -19776,11 +19776,11 @@ div {
    },
    {
    "annotation": "optimizer > join_order", 
-   "timing": 0.000030
+   "timing": 0.000027
    },
    {
    "annotation": "optimizer > regex_range", 
-   "timing": 0.000000
+   "timing": 0.000001
    },
    {
    "annotation": "optimizer > reorder_filter", 
@@ -19788,7 +19788,7 @@ div {
    },
    {
    "annotation": "optimizer > statistics_propagation", 
-   "timing": 0.000028
+   "timing": 0.000029
    },
    {
    "annotation": "optimizer > top_n", 
@@ -19796,15 +19796,15 @@ div {
    },
    {
    "annotation": "optimizer > unused_columns", 
-   "timing": 0.000008
+   "timing": 0.000006
    },
    {
    "annotation": "physical_planner", 
-   "timing": 0.000029
+   "timing": 0.000028
    },
    {
    "annotation": "physical_planner > column_binding", 
-   "timing": 0.000009
+   "timing": 0.000008
    },
    {
    "annotation": "physical_planner > create_plan", 
@@ -19812,15 +19812,15 @@ div {
    },
    {
    "annotation": "physical_planner > resolve_types", 
-   "timing": 0.000004
+   "timing": 0.000003
    },
    {
    "annotation": "planner", 
-   "timing": 0.000263
+   "timing": 0.000217
    },
    {
    "annotation": "planner > binder", 
-   "timing": 0.000253
+   "timing": 0.000209
    }
    ],
    "children": [
@@ -19834,7 +19834,7 @@ div {
          "annotation": "ExpressionRoot",
          "id": 1,
          "name": "/(CAST(*(100.00, sum(CASE WHEN (~~(p_type, PROMO%)) THEN (*(l_extendedprice, -(CAST(1 AS DECIMAL(16,2)), l_discount))) ELSE (CAST(0 AS DECIMAL(18,4))))) AS DOUBLE), CAST(sum(*(l_extendedprice, -(CAST(1 AS DECIMAL(16,2)), l_discount))) AS DOUBLE))",
-         "timing":6755.000000,
+         "timing":5994.000000,
          "cycles_per_tuple": "NULL" ,
          "sample_size": 1,
          "input_size": 1,
@@ -19844,7 +19844,7 @@ div {
          "annotation": "Function",
          "id": 1,
          "name": "/",
-         "timing":612.000000,
+         "timing":698.000000,
          "cycles_per_tuple": "NULL" ,
          "sample_size": 1,
          "input_size": 1,
@@ -19853,8 +19853,8 @@ div {
        {
          "annotation": "Function",
          "id": 2,
-         "name": "*",
-         "timing":971.000000,
+         "name": "*(DECIMAL(38,2), DECIMAL(38,4)) -> DECIMAL(38,6)",
+         "timing":986.000000,
          "cycles_per_tuple": "NULL" ,
          "sample_size": 1,
          "input_size": 1,
@@ -19864,7 +19864,7 @@ div {
       "children": [
        {
          "name": "SIMPLE_AGGREGATE",
-         "timing":0.000342,
+         "timing":0.000496,
          "cardinality":1,
          "extra_info": "sum(#0)\nsum(#1)",
          "timings": [
@@ -19872,7 +19872,7 @@ div {
             "annotation": "ExpressionRoot",
             "id": 1,
             "name": "#0",
-            "timing":0.110996,
+            "timing":0.323651,
             "cycles_per_tuple": "NULL" ,
             "sample_size": 964,
             "input_size": 75983,
@@ -19882,9 +19882,9 @@ div {
             "annotation": "ExpressionRoot",
             "id": 2,
             "name": "#1",
-            "timing":0.136929,
+            "timing":0.106310,
             "cycles_per_tuple": "NULL" ,
-            "sample_size": 964,
+            "sample_size": 1458,
             "input_size": 75983,
             "extra_info": "child_executor"
           }
@@ -19892,7 +19892,7 @@ div {
          "children": [
           {
             "name": "PROJECTION",
-            "timing":0.002272,
+            "timing":0.003070,
             "cardinality":151966,
             "extra_info": "CASE WHEN (prefix(p_type, PROMO)) THEN (#1) ELSE (0.0000)\n#1\n",
             "timings": [
@@ -19900,7 +19900,7 @@ div {
                "annotation": "ExpressionRoot",
                "id": 1,
                "name": "CASE WHEN (prefix(p_type, PROMO)) THEN (#1) ELSE (0.0000)",
-               "timing":23.284232,
+               "timing":45.087137,
                "cycles_per_tuple": "NULL" ,
                "sample_size": 964,
                "input_size": 75983,
@@ -19909,10 +19909,10 @@ div {
              {
                "annotation": "Function",
                "id": 1,
-               "name": "prefix",
-               "timing":14.000000,
+               "name": "prefix(VARCHAR, VARCHAR) -> BOOLEAN",
+               "timing":13.431983,
                "cycles_per_tuple": "NULL" ,
-               "sample_size": 964,
+               "sample_size": 1926,
                "input_size": 75983,
                "extra_info": ""
              },
@@ -19920,9 +19920,9 @@ div {
                "annotation": "ExpressionRoot",
                "id": 2,
                "name": "#1",
-               "timing":0.206325,
+               "timing":0.198651,
                "cycles_per_tuple": "NULL" ,
-               "sample_size": 1929,
+               "sample_size": 1928,
                "input_size": 75983,
                "extra_info": "projection"
              }
@@ -19930,7 +19930,7 @@ div {
             "children": [
              {
                "name": "PROJECTION",
-               "timing":0.000676,
+               "timing":0.001204,
                "cardinality":151966,
                "extra_info": "p_type\n*(l_extendedprice, -(1.00, l_discount))\n",
                "timings": [
@@ -19938,7 +19938,7 @@ div {
                   "annotation": "ExpressionRoot",
                   "id": 1,
                   "name": "#4",
-                  "timing":0.228216,
+                  "timing":0.603734,
                   "cycles_per_tuple": "NULL" ,
                   "sample_size": 964,
                   "input_size": 75983,
@@ -19948,9 +19948,9 @@ div {
                   "annotation": "ExpressionRoot",
                   "id": 2,
                   "name": "*(l_extendedprice, -(1.00, l_discount))",
-                  "timing":3.805054,
+                  "timing":7.979835,
                   "cycles_per_tuple": "NULL" ,
-                  "sample_size": 1939,
+                  "sample_size": 1934,
                   "input_size": 75983,
                   "extra_info": "projection"
                 },
@@ -19958,17 +19958,17 @@ div {
                   "annotation": "Function",
                   "id": 1,
                   "name": "*",
-                  "timing":1.070838,
+                  "timing":2.551867,
                   "cycles_per_tuple": "NULL" ,
-                  "sample_size": 1934,
+                  "sample_size": 964,
                   "input_size": 75983,
                   "extra_info": ""
                 },
                 {
                   "annotation": "Function",
                   "id": 2,
-                  "name": "-",
-                  "timing":1.263485,
+                  "name": "-(DECIMAL(16,2), DECIMAL(15,2)) -> DECIMAL(16,2)",
+                  "timing":2.945021,
                   "cycles_per_tuple": "NULL" ,
                   "sample_size": 964,
                   "input_size": 75983,
@@ -19978,7 +19978,7 @@ div {
                "children": [
                 {
                   "name": "HASH_JOIN",
-                  "timing":0.104728,
+                  "timing":0.128754,
                   "cardinality":151966,
                   "extra_info": "INNER\nl_partkey=p_partkey\n",
                   "timings": [
@@ -19986,9 +19986,9 @@ div {
                      "annotation": "ExpressionRoot",
                      "id": 1,
                      "name": "#2",
-                     "timing":29.597925,
+                     "timing":40.192563,
                      "cycles_per_tuple": "NULL" ,
-                     "sample_size": 771,
+                     "sample_size": 753,
                      "input_size": 75983,
                      "extra_info": "probe_executor"
                    },
@@ -19996,7 +19996,7 @@ div {
                      "annotation": "ExpressionRoot",
                      "id": 2,
                      "name": "#1",
-                     "timing":0.337402,
+                     "timing":0.377930,
                      "cycles_per_tuple": "NULL" ,
                      "sample_size": 2048,
                      "input_size": 200000,
@@ -20006,7 +20006,7 @@ div {
                   "children": [
                    {
                      "name": "SEQ_SCAN",
-                     "timing":0.100388,
+                     "timing":0.123236,
                      "cardinality":151966,
                      "extra_info": "lineitem\n[INFOSEPARATOR]\nl_extendedprice\nl_discount\nl_partkey\nl_shipdate\n[INFOSEPARATOR]\nFilters: l_shipdate>=1995-09-01 AND l_shipdate<1995-10-01 AND l_shipdate IS NOT NULL\n",
                      "timings": [
@@ -20017,7 +20017,7 @@ div {
 ,
                    {
                      "name": "SEQ_SCAN",
-                     "timing":0.003220,
+                     "timing":0.003648,
                      "cardinality":400000,
                      "extra_info": "part\n[INFOSEPARATOR]\np_type\np_partkey",
                      "timings": [

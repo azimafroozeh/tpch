@@ -19733,18 +19733,18 @@ div {
 })));</script>
 <script> var data = {
    "name":  "Query", 
-   "result": 0.391766,
-   "timing": 0.391766,
+   "result": 0.604372,
+   "timing": 0.604372,
    "cardinality": 1,
    "extra-info": "SELECT\n    sum(l_extendedprice) / 7.0 AS avg_yearly\nFROM\n    lineitem,\n    part\nWHERE\n    p_partkey = l_partkey\n    AND p_brand = 'Brand#23'\n    AND p_container = 'MED BOX'\n    AND l_quantity < (\n        SELECT\n            0.2 * avg(l_quantity)\n        FROM\n            lineitem\n        WHERE\n            l_partkey = p_partkey);\n\t\n\n", 
    "timings": [
    {
    "annotation": "optimizer", 
-   "timing": 0.000817
+   "timing": 0.000963
    },
    {
    "annotation": "optimizer > column_lifetime", 
-   "timing": 0.000021
+   "timing": 0.000022
    },
    {
    "annotation": "optimizer > common_aggregate", 
@@ -19752,23 +19752,23 @@ div {
    },
    {
    "annotation": "optimizer > common_subexpressions", 
-   "timing": 0.000005
+   "timing": 0.000006
    },
    {
    "annotation": "optimizer > deliminator", 
-   "timing": 0.000009
+   "timing": 0.000011
    },
    {
    "annotation": "optimizer > expression_rewriter", 
-   "timing": 0.000246
+   "timing": 0.000304
    },
    {
    "annotation": "optimizer > filter_pullup", 
-   "timing": 0.000001
+   "timing": 0.000002
    },
    {
    "annotation": "optimizer > filter_pushdown", 
-   "timing": 0.000418
+   "timing": 0.000481
    },
    {
    "annotation": "optimizer > in_clause", 
@@ -19776,7 +19776,7 @@ div {
    },
    {
    "annotation": "optimizer > join_order", 
-   "timing": 0.000042
+   "timing": 0.000047
    },
    {
    "annotation": "optimizer > regex_range", 
@@ -19784,11 +19784,11 @@ div {
    },
    {
    "annotation": "optimizer > reorder_filter", 
-   "timing": 0.000005
+   "timing": 0.000006
    },
    {
    "annotation": "optimizer > statistics_propagation", 
-   "timing": 0.000035
+   "timing": 0.000040
    },
    {
    "annotation": "optimizer > top_n", 
@@ -19796,37 +19796,37 @@ div {
    },
    {
    "annotation": "optimizer > unused_columns", 
-   "timing": 0.000013
+   "timing": 0.000014
    },
    {
    "annotation": "physical_planner", 
-   "timing": 0.000052
+   "timing": 0.000064
    },
    {
    "annotation": "physical_planner > column_binding", 
-   "timing": 0.000016
+   "timing": 0.000019
    },
    {
    "annotation": "physical_planner > create_plan", 
-   "timing": 0.000023
+   "timing": 0.000028
    },
    {
    "annotation": "physical_planner > resolve_types", 
-   "timing": 0.000005
+   "timing": 0.000006
    },
    {
    "annotation": "planner", 
-   "timing": 0.000177
+   "timing": 0.000221
    },
    {
    "annotation": "planner > binder", 
-   "timing": 0.000174
+   "timing": 0.000217
    }
    ],
    "children": [
     {
       "name": "PROJECTION",
-      "timing":0.000005,
+      "timing":0.000007,
       "cardinality":1,
       "extra_info": "avg_yearly\n",
       "timings": [
@@ -19834,7 +19834,7 @@ div {
          "annotation": "ExpressionRoot",
          "id": 1,
          "name": "/(CAST(sum(#[6.0]) AS DOUBLE), 7.000000)",
-         "timing":3907.000000,
+         "timing":4474.000000,
          "cycles_per_tuple": "NULL" ,
          "sample_size": 1,
          "input_size": 1,
@@ -19844,7 +19844,7 @@ div {
          "annotation": "Function",
          "id": 1,
          "name": "/",
-         "timing":852.000000,
+         "timing":892.000000,
          "cycles_per_tuple": "NULL" ,
          "sample_size": 1,
          "input_size": 1,
@@ -19854,7 +19854,7 @@ div {
       "children": [
        {
          "name": "SIMPLE_AGGREGATE",
-         "timing":0.000015,
+         "timing":0.000024,
          "cardinality":1,
          "extra_info": "sum(#0)",
          "timings": [
@@ -19862,7 +19862,7 @@ div {
             "annotation": "ExpressionRoot",
             "id": 1,
             "name": "#0",
-            "timing":0.727273,
+            "timing":1.181818,
             "cycles_per_tuple": "NULL" ,
             "sample_size": 110,
             "input_size": 587,
@@ -19872,7 +19872,7 @@ div {
          "children": [
           {
             "name": "PROJECTION",
-            "timing":0.000004,
+            "timing":0.000002,
             "cardinality":1174,
             "extra_info": "l_extendedprice\n",
             "timings": [
@@ -19880,7 +19880,7 @@ div {
                "annotation": "ExpressionRoot",
                "id": 1,
                "name": "#0",
-               "timing":0.818182,
+               "timing":1.218182,
                "cycles_per_tuple": "NULL" ,
                "sample_size": 110,
                "input_size": 587,
@@ -19890,7 +19890,7 @@ div {
             "children": [
              {
                "name": "PROJECTION",
-               "timing":0.000018,
+               "timing":0.000040,
                "cardinality":1174,
                "extra_info": "#0\n",
                "timings": [
@@ -19898,7 +19898,7 @@ div {
                   "annotation": "ExpressionRoot",
                   "id": 1,
                   "name": "#0",
-                  "timing":1.154545,
+                  "timing":2.409091,
                   "cycles_per_tuple": "NULL" ,
                   "sample_size": 110,
                   "input_size": 587,
@@ -19908,7 +19908,7 @@ div {
                "children": [
                 {
                   "name": "FILTER",
-                  "timing":0.000084,
+                  "timing":0.000134,
                   "cardinality":1174,
                   "extra_info": "CAST(l_quantity AS DOUBLE)<SUBQUERY",
                   "timings": [
@@ -19916,7 +19916,7 @@ div {
                      "annotation": "ExpressionRoot",
                      "id": 1,
                      "name": "CAST(l_quantity AS DOUBLE)<SUBQUERY",
-                     "timing":9.115234,
+                     "timing":11.518555,
                      "cycles_per_tuple": "NULL" ,
                      "sample_size": 1024,
                      "input_size": 6088,
@@ -19926,7 +19926,7 @@ div {
                   "children": [
                    {
                      "name": "DELIM_JOIN",
-                     "timing":0.000339,
+                     "timing":0.000416,
                      "cardinality":12176,
                      "extra_info": "SINGLE\np_partkey=p_partkey\n",
                      "timings": [
@@ -19934,7 +19934,7 @@ div {
                      "children": [
                       {
                         "name": "HASH_JOIN",
-                        "timing":0.050503,
+                        "timing":0.065006,
                         "cardinality":6088,
                         "extra_info": "INNER\nl_partkey=p_partkey\n",
                         "timings": [
@@ -19942,9 +19942,9 @@ div {
                            "annotation": "ExpressionRoot",
                            "id": 1,
                            "name": "#1",
-                           "timing":0.093471,
+                           "timing":0.116362,
                            "cycles_per_tuple": "NULL" ,
-                           "sample_size": 57344,
+                           "sample_size": 59392,
                            "input_size": 6001215,
                            "extra_info": "probe_executor"
                          },
@@ -19952,9 +19952,9 @@ div {
                            "annotation": "ExpressionRoot",
                            "id": 2,
                            "name": "#0",
-                           "timing":284.500000,
+                           "timing":357.750000,
                            "cycles_per_tuple": "NULL" ,
-                           "sample_size": 2,
+                           "sample_size": 4,
                            "input_size": 204,
                            "extra_info": "build_executor"
                          }
@@ -19962,7 +19962,7 @@ div {
                         "children": [
                          {
                            "name": "SEQ_SCAN",
-                           "timing":0.013409,
+                           "timing":0.016014,
                            "cardinality":6001215,
                            "extra_info": "lineitem\n[INFOSEPARATOR]\nl_extendedprice\nl_partkey\nl_quantity",
                            "timings": [
@@ -19973,7 +19973,7 @@ div {
 ,
                          {
                            "name": "SEQ_SCAN",
-                           "timing":0.014106,
+                           "timing":0.017632,
                            "cardinality":408,
                            "extra_info": "part\n[INFOSEPARATOR]\np_partkey\np_brand\np_container\n[INFOSEPARATOR]\nFilters: p_brand=Brand#23 AND p_brand IS NOT NULL\np_container=MED BOX AND p_container IS NOT NULL\n",
                            "timings": [
@@ -19986,7 +19986,7 @@ div {
 ,
                       {
                         "name": "HASH_JOIN",
-                        "timing":0.000170,
+                        "timing":0.000260,
                         "cardinality":12176,
                         "extra_info": "SINGLE\np_partkey=p_partkey\n",
                         "timings": [
@@ -19994,7 +19994,7 @@ div {
                            "annotation": "ExpressionRoot",
                            "id": 1,
                            "name": "#1",
-                           "timing":1.730392,
+                           "timing":2.450980,
                            "cycles_per_tuple": "NULL" ,
                            "sample_size": 204,
                            "input_size": 204,
@@ -20004,7 +20004,7 @@ div {
                         "children": [
                          {
                            "name": "CHUNK_SCAN",
-                           "timing":0.000002,
+                           "timing":0.000010,
                            "cardinality":12176,
                            "extra_info": "",
                            "timings": [
@@ -20015,7 +20015,7 @@ div {
 ,
                          {
                            "name": "PROJECTION",
-                           "timing":0.000020,
+                           "timing":0.000022,
                            "cardinality":408,
                            "extra_info": "*(0.200000, avg(#[14.0]))\n#2\n",
                            "timings": [
@@ -20023,7 +20023,7 @@ div {
                               "annotation": "ExpressionRoot",
                               "id": 1,
                               "name": "*(0.200000, avg(#[14.0]))",
-                              "timing":41.553922,
+                              "timing":45.504902,
                               "cycles_per_tuple": "NULL" ,
                               "sample_size": 204,
                               "input_size": 204,
@@ -20033,7 +20033,7 @@ div {
                               "annotation": "Function",
                               "id": 1,
                               "name": "*",
-                              "timing":31.681373,
+                              "timing":31.647059,
                               "cycles_per_tuple": "NULL" ,
                               "sample_size": 204,
                               "input_size": 204,
@@ -20043,7 +20043,7 @@ div {
                               "annotation": "ExpressionRoot",
                               "id": 2,
                               "name": "#2",
-                              "timing":0.509804,
+                              "timing":0.500000,
                               "cycles_per_tuple": "NULL" ,
                               "sample_size": 204,
                               "input_size": 204,
@@ -20053,7 +20053,7 @@ div {
                            "children": [
                             {
                               "name": "HASH_JOIN",
-                              "timing":0.002706,
+                              "timing":0.004886,
                               "cardinality":408,
                               "extra_info": "RIGHT\n#0=#0\n",
                               "timings": [
@@ -20061,7 +20061,7 @@ div {
                                  "annotation": "ExpressionRoot",
                                  "id": 1,
                                  "name": "#0",
-                                 "timing":0.252279,
+                                 "timing":0.517253,
                                  "cycles_per_tuple": "NULL" ,
                                  "sample_size": 3072,
                                  "input_size": 200000,
@@ -20071,7 +20071,7 @@ div {
                                  "annotation": "ExpressionRoot",
                                  "id": 2,
                                  "name": "#0",
-                                 "timing":1.333333,
+                                 "timing":1.553922,
                                  "cycles_per_tuple": "NULL" ,
                                  "sample_size": 204,
                                  "input_size": 204,
@@ -20081,7 +20081,7 @@ div {
                               "children": [
                                {
                                  "name": "HASH_GROUP_BY",
-                                 "timing":0.299665,
+                                 "timing":0.490451,
                                  "cardinality":400000,
                                  "extra_info": "#0\navg(#1)",
                                  "timings": [
@@ -20089,7 +20089,7 @@ div {
                                  "children": [
                                   {
                                     "name": "PROJECTION",
-                                    "timing":0.002508,
+                                    "timing":0.002378,
                                     "cardinality":6001215,
                                     "extra_info": "l_partkey\nl_quantity\n",
                                     "timings": [
@@ -20097,9 +20097,9 @@ div {
                                        "annotation": "ExpressionRoot",
                                        "id": 1,
                                        "name": "#1",
-                                       "timing":0.127235,
+                                       "timing":0.178279,
                                        "cycles_per_tuple": "NULL" ,
-                                       "sample_size": 60416,
+                                       "sample_size": 62464,
                                        "input_size": 6001215,
                                        "extra_info": "projection"
                                      },
@@ -20107,9 +20107,9 @@ div {
                                        "annotation": "ExpressionRoot",
                                        "id": 2,
                                        "name": "#0",
-                                       "timing":0.101447,
+                                       "timing":0.105485,
                                        "cycles_per_tuple": "NULL" ,
-                                       "sample_size": 60416,
+                                       "sample_size": 62464,
                                        "input_size": 6001215,
                                        "extra_info": "projection"
                                      }
@@ -20117,7 +20117,7 @@ div {
                                     "children": [
                                      {
                                        "name": "SEQ_SCAN",
-                                       "timing":0.012123,
+                                       "timing":0.015821,
                                        "cardinality":6001215,
                                        "extra_info": "lineitem\n[INFOSEPARATOR]\nl_quantity\nl_partkey",
                                        "timings": [

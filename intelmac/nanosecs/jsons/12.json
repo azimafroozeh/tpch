@@ -1,33 +1,33 @@
 {
    "name":  "Query", 
-   "result": 0.423059,
-   "timing": 0.423059,
+   "result": 0.499714,
+   "timing": 0.499714,
    "cardinality": 2,
    "extra-info": "SELECT\n    l_shipmode,\n    sum(\n        CASE WHEN o_orderpriority = '1-URGENT'\n            OR o_orderpriority = '2-HIGH' THEN\n            1\n        ELSE\n            0\n        END) AS high_line_count,\n    sum(\n        CASE WHEN o_orderpriority <> '1-URGENT'\n            AND o_orderpriority <> '2-HIGH' THEN\n            1\n        ELSE\n            0\n        END) AS low_line_count\nFROM\n    orders,\n    lineitem\nWHERE\n    o_orderkey = l_orderkey\n    AND l_shipmode IN ('MAIL', 'SHIP')\n    AND l_commitdate < l_receiptdate\n    AND l_shipdate < l_commitdate\n    AND l_receiptdate >= CAST('1994-01-01' AS date)\n    AND l_receiptdate < CAST('1995-01-01' AS date)\nGROUP BY\n    l_shipmode\nORDER BY\n    l_shipmode;\n\t\n\n", 
    "timings": [
    {
    "annotation": "optimizer", 
-   "timing": 0.001322
+   "timing": 0.000873
    },
    {
    "annotation": "optimizer > column_lifetime", 
-   "timing": 0.000016
+   "timing": 0.000009
    },
    {
    "annotation": "optimizer > common_aggregate", 
-   "timing": 0.000004
+   "timing": 0.000003
    },
    {
    "annotation": "optimizer > common_subexpressions", 
-   "timing": 0.000013
+   "timing": 0.000009
    },
    {
    "annotation": "optimizer > deliminator", 
-   "timing": 0.000000
+   "timing": 0.000001
    },
    {
    "annotation": "optimizer > expression_rewriter", 
-   "timing": 0.000681
+   "timing": 0.000488
    },
    {
    "annotation": "optimizer > filter_pullup", 
@@ -35,15 +35,15 @@
    },
    {
    "annotation": "optimizer > filter_pushdown", 
-   "timing": 0.000448
+   "timing": 0.000272
    },
    {
    "annotation": "optimizer > in_clause", 
-   "timing": 0.000005
+   "timing": 0.000003
    },
    {
    "annotation": "optimizer > join_order", 
-   "timing": 0.000059
+   "timing": 0.000031
    },
    {
    "annotation": "optimizer > regex_range", 
@@ -51,49 +51,49 @@
    },
    {
    "annotation": "optimizer > reorder_filter", 
-   "timing": 0.000012
+   "timing": 0.000006
    },
    {
    "annotation": "optimizer > statistics_propagation", 
-   "timing": 0.000045
+   "timing": 0.000026
    },
    {
    "annotation": "optimizer > top_n", 
-   "timing": 0.000001
+   "timing": 0.000000
    },
    {
    "annotation": "optimizer > unused_columns", 
-   "timing": 0.000015
+   "timing": 0.000009
    },
    {
    "annotation": "physical_planner", 
-   "timing": 0.000055
+   "timing": 0.000036
    },
    {
    "annotation": "physical_planner > column_binding", 
-   "timing": 0.000020
+   "timing": 0.000010
    },
    {
    "annotation": "physical_planner > create_plan", 
-   "timing": 0.000020
+   "timing": 0.000016
    },
    {
    "annotation": "physical_planner > resolve_types", 
-   "timing": 0.000007
+   "timing": 0.000003
    },
    {
    "annotation": "planner", 
-   "timing": 0.000133
+   "timing": 0.000113
    },
    {
    "annotation": "planner > binder", 
-   "timing": 0.000123
+   "timing": 0.000106
    }
    ],
    "children": [
     {
       "name": "ORDER_BY",
-      "timing":0.000046,
+      "timing":0.000058,
       "cardinality":2,
       "extra_info": "#0 ASC",
       "timings": [
@@ -101,7 +101,7 @@
       "children": [
        {
          "name": "HASH_GROUP_BY",
-         "timing":0.001010,
+         "timing":0.001212,
          "cardinality":2,
          "extra_info": "#0\nsum(#1)\nsum(#2)",
          "timings": [
@@ -109,7 +109,7 @@
          "children": [
           {
             "name": "PROJECTION",
-            "timing":0.002001,
+            "timing":0.002227,
             "cardinality":30988,
             "extra_info": "l_shipmode\nCASE WHEN ((o_orderpriority=1-URGENT OR o_orderpriority=2-HIGH)) THEN (1) ELSE (0)\nCASE WHEN ((o_orderpriority!=1-URGENT AND o_orderpriority!=2-HIGH)) THEN (1) ELSE (0)\n",
             "timings": [
@@ -117,7 +117,7 @@
                "annotation": "ExpressionRoot",
                "id": 1,
                "name": "#0",
-               "timing":0.213098,
+               "timing":0.144491,
                "cycles_per_tuple": "NULL" ,
                "sample_size": 962,
                "input_size": 30988,
@@ -127,7 +127,7 @@
                "annotation": "ExpressionRoot",
                "id": 2,
                "name": "CASE WHEN ((o_orderpriority=1-URGENT OR o_orderpriority=2-HIGH)) THEN (1) ELSE (0)",
-               "timing":42.811850,
+               "timing":38.054054,
                "cycles_per_tuple": "NULL" ,
                "sample_size": 962,
                "input_size": 30988,
@@ -137,7 +137,7 @@
                "annotation": "ExpressionRoot",
                "id": 3,
                "name": "CASE WHEN ((o_orderpriority!=1-URGENT AND o_orderpriority!=2-HIGH)) THEN (1) ELSE (0)",
-               "timing":55.424116,
+               "timing":54.613306,
                "cycles_per_tuple": "NULL" ,
                "sample_size": 962,
                "input_size": 30988,
@@ -147,7 +147,7 @@
             "children": [
              {
                "name": "HASH_JOIN",
-               "timing":0.133959,
+               "timing":0.161462,
                "cardinality":30988,
                "extra_info": "INNER\nl_orderkey=o_orderkey\n",
                "timings": [
@@ -155,9 +155,9 @@
                   "annotation": "ExpressionRoot",
                   "id": 1,
                   "name": "#1",
-                  "timing":177.525478,
+                  "timing":120.075472,
                   "cycles_per_tuple": "NULL" ,
-                  "sample_size": 314,
+                  "sample_size": 318,
                   "input_size": 30988,
                   "extra_info": "probe_executor"
                 },
@@ -165,9 +165,9 @@
                   "annotation": "ExpressionRoot",
                   "id": 2,
                   "name": "#1",
-                  "timing":0.153516,
+                  "timing":0.171143,
                   "cycles_per_tuple": "NULL" ,
-                  "sample_size": 15360,
+                  "sample_size": 16384,
                   "input_size": 1500000,
                   "extra_info": "build_executor"
                 }
@@ -175,7 +175,7 @@
                "children": [
                 {
                   "name": "PROJECTION",
-                  "timing":0.007462,
+                  "timing":0.009252,
                   "cardinality":30988,
                   "extra_info": "#0\n#1\n",
                   "timings": [
@@ -183,9 +183,9 @@
                      "annotation": "ExpressionRoot",
                      "id": 1,
                      "name": "#0",
-                     "timing":16.752266,
+                     "timing":22.262537,
                      "cycles_per_tuple": "NULL" ,
-                     "sample_size": 331,
+                     "sample_size": 339,
                      "input_size": 30988,
                      "extra_info": "projection"
                    },
@@ -193,9 +193,9 @@
                      "annotation": "ExpressionRoot",
                      "id": 2,
                      "name": "#1",
-                     "timing":17.088889,
+                     "timing":19.375358,
                      "cycles_per_tuple": "NULL" ,
-                     "sample_size": 315,
+                     "sample_size": 349,
                      "input_size": 30988,
                      "extra_info": "projection"
                    }
@@ -203,7 +203,7 @@
                   "children": [
                    {
                      "name": "FILTER",
-                     "timing":0.062994,
+                     "timing":0.078358,
                      "cardinality":30988,
                      "extra_info": "(l_commitdate<l_receiptdate AND l_shipdate<l_commitdate AND (l_shipmode=MAIL OR l_shipmode=SHIP))",
                      "timings": [
@@ -211,9 +211,9 @@
                         "annotation": "ExpressionRoot",
                         "id": 1,
                         "name": "(l_commitdate<l_receiptdate AND l_shipdate<l_commitdate AND (l_shipmode=MAIL OR l_shipmode=SHIP))",
-                        "timing":60.569369,
+                        "timing":80.107346,
                         "cycles_per_tuple": "NULL" ,
-                        "sample_size": 8462,
+                        "sample_size": 8440,
                         "input_size": 885773,
                         "extra_info": "executor"
                       }
@@ -221,7 +221,7 @@
                      "children": [
                       {
                         "name": "SEQ_SCAN",
-                        "timing":0.160013,
+                        "timing":0.203398,
                         "cardinality":885773,
                         "extra_info": "lineitem\n[INFOSEPARATOR]\nl_shipmode\nl_orderkey\nl_commitdate\nl_receiptdate\nl_shipdate\n[INFOSEPARATOR]\nFilters: l_shipdate<1995-01-01 AND l_shipdate IS NOT NULL\nl_receiptdate>=1994-01-01 AND l_receiptdate<1995-01-01 AND l_receiptdate IS NOT NULL\nl_commitdate<1995-01-01 AND l_commitdate IS NOT NULL\n",
                         "timings": [
@@ -236,7 +236,7 @@
 ,
                 {
                   "name": "SEQ_SCAN",
-                  "timing":0.043786,
+                  "timing":0.049634,
                   "cardinality":3000000,
                   "extra_info": "orders\n[INFOSEPARATOR]\no_orderpriority\no_orderkey",
                   "timings": [
