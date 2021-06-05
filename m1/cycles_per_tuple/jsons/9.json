@@ -1,0 +1,570 @@
+{
+   "name":  "Query", 
+   "result": 5.618545,
+   "timing": 5.618545,
+   "cardinality": 175,
+   "extra-info": "SELECT\n    nation,\n    o_year,\n    sum(amount) AS sum_profit\nFROM (\n    SELECT\n        n_name AS nation,\n        extract(year FROM o_orderdate) AS o_year,\n        l_extendedprice * (1 - l_discount) - ps_supplycost * l_quantity AS amount\n    FROM\n        part,\n        supplier,\n        lineitem,\n        partsupp,\n        orders,\n        nation\n    WHERE\n        s_suppkey = l_suppkey\n        AND ps_suppkey = l_suppkey\n        AND ps_partkey = l_partkey\n        AND p_partkey = l_partkey\n        AND o_orderkey = l_orderkey\n        AND s_nationkey = n_nationkey\n        AND p_name LIKE '%green%') AS profit\nGROUP BY\n    nation,\n    o_year\nORDER BY\n    nation,\n    o_year DESC;\n\t\n\n", 
+   "timings": [
+   {
+   "annotation": "optimizer", 
+   "timing": 0.007088
+   },
+   {
+   "annotation": "optimizer > column_lifetime", 
+   "timing": 0.000025
+   },
+   {
+   "annotation": "optimizer > common_aggregate", 
+   "timing": 0.000003
+   },
+   {
+   "annotation": "optimizer > common_subexpressions", 
+   "timing": 0.000017
+   },
+   {
+   "annotation": "optimizer > deliminator", 
+   "timing": 0.000002
+   },
+   {
+   "annotation": "optimizer > expression_rewriter", 
+   "timing": 0.002148
+   },
+   {
+   "annotation": "optimizer > filter_pullup", 
+   "timing": 0.000002
+   },
+   {
+   "annotation": "optimizer > filter_pushdown", 
+   "timing": 0.000221
+   },
+   {
+   "annotation": "optimizer > in_clause", 
+   "timing": 0.000002
+   },
+   {
+   "annotation": "optimizer > join_order", 
+   "timing": 0.004420
+   },
+   {
+   "annotation": "optimizer > regex_range", 
+   "timing": 0.000001
+   },
+   {
+   "annotation": "optimizer > reorder_filter", 
+   "timing": 0.000008
+   },
+   {
+   "annotation": "optimizer > statistics_propagation", 
+   "timing": 0.000179
+   },
+   {
+   "annotation": "optimizer > top_n", 
+   "timing": 0.000001
+   },
+   {
+   "annotation": "optimizer > unused_columns", 
+   "timing": 0.000036
+   },
+   {
+   "annotation": "physical_planner", 
+   "timing": 0.000112
+   },
+   {
+   "annotation": "physical_planner > column_binding", 
+   "timing": 0.000038
+   },
+   {
+   "annotation": "physical_planner > create_plan", 
+   "timing": 0.000043
+   },
+   {
+   "annotation": "physical_planner > resolve_types", 
+   "timing": 0.000013
+   },
+   {
+   "annotation": "planner", 
+   "timing": 0.000819
+   },
+   {
+   "annotation": "planner > binder", 
+   "timing": 0.000806
+   }
+   ],
+   "children": [
+    {
+      "name": "ORDER_BY",
+      "timing":0.000110,
+      "cardinality":175,
+      "extra_info": "#0 ASC\n#1 DESC",
+      "timings": [
+      ],
+      "children": [
+       {
+         "name": "HASH_GROUP_BY",
+         "timing":0.030051,
+         "cardinality":175,
+         "extra_info": "#0\n#1\nsum(#2)",
+         "timings": [
+         ],
+         "children": [
+          {
+            "name": "PROJECTION",
+            "timing":0.000914,
+            "cardinality":319404,
+            "extra_info": "nation\no_year\namount\n",
+            "timings": [
+              {
+               "annotation": "ExpressionRoot",
+               "id": 1,
+               "name": "#0",
+               "timing": "NULL" ,
+               "cycles_per_tuple": 0.893479,
+               "sample_size": 3849,
+               "input_size": 319404,
+               "extra_info": "projection"
+             },
+             {
+               "annotation": "ExpressionRoot",
+               "id": 2,
+               "name": "#1",
+               "timing": "NULL" ,
+               "cycles_per_tuple": 1.425820,
+               "sample_size": 3842,
+               "input_size": 319404,
+               "extra_info": "projection"
+             },
+             {
+               "annotation": "ExpressionRoot",
+               "id": 3,
+               "name": "#2",
+               "timing": "NULL" ,
+               "cycles_per_tuple": 0.618585,
+               "sample_size": 2884,
+               "input_size": 319404,
+               "extra_info": "projection"
+             }
+            ],
+            "children": [
+             {
+               "name": "PROJECTION",
+               "timing":0.021668,
+               "cardinality":319404,
+               "extra_info": "nation\nyear(o_orderdate)\namount\n",
+               "timings": [
+                 {
+                  "annotation": "ExpressionRoot",
+                  "id": 1,
+                  "name": "#8",
+                  "timing": "NULL" ,
+                  "cycles_per_tuple": 0.380000,
+                  "sample_size": 3850,
+                  "input_size": 319404,
+                  "extra_info": "projection"
+                },
+                {
+                  "annotation": "ExpressionRoot",
+                  "id": 2,
+                  "name": "year(o_orderdate)",
+                  "timing": "NULL" ,
+                  "cycles_per_tuple": 37.629116,
+                  "sample_size": 2885,
+                  "input_size": 319404,
+                  "extra_info": "projection"
+                },
+                {
+                  "annotation": "Function",
+                  "id": 1,
+                  "name": "year",
+                  "timing": "NULL" ,
+                  "cycles_per_tuple": 28.232649,
+                  "sample_size": 3847,
+                  "input_size": 319404,
+                  "extra_info": ""
+                },
+                {
+                  "annotation": "ExpressionRoot",
+                  "id": 3,
+                  "name": "-(*(l_extendedprice, -(1.00, l_discount)), CAST(*(ps_supplycost, CAST(l_quantity AS DECIMAL(18,0))) AS DECIMAL(18,4)))",
+                  "timing": "NULL" ,
+                  "cycles_per_tuple": 98.348753,
+                  "sample_size": 3848,
+                  "input_size": 319404,
+                  "extra_info": "projection"
+                },
+                {
+                  "annotation": "Function",
+                  "id": 2,
+                  "name": "-",
+                  "timing": "NULL" ,
+                  "cycles_per_tuple": 3.278168,
+                  "sample_size": 3843,
+                  "input_size": 319404,
+                  "extra_info": ""
+                },
+                {
+                  "annotation": "Function",
+                  "id": 3,
+                  "name": "*",
+                  "timing": "NULL" ,
+                  "cycles_per_tuple": 8.940076,
+                  "sample_size": 2887,
+                  "input_size": 319404,
+                  "extra_info": ""
+                },
+                {
+                  "annotation": "Function",
+                  "id": 4,
+                  "name": "-",
+                  "timing": "NULL" ,
+                  "cycles_per_tuple": 6.257351,
+                  "sample_size": 3843,
+                  "input_size": 319404,
+                  "extra_info": ""
+                },
+                {
+                  "annotation": "Function",
+                  "id": 5,
+                  "name": "*",
+                  "timing": "NULL" ,
+                  "cycles_per_tuple": 4.759907,
+                  "sample_size": 3861,
+                  "input_size": 319404,
+                  "extra_info": ""
+                }
+               ],
+               "children": [
+                {
+                  "name": "HASH_JOIN",
+                  "timing":1.753706,
+                  "cardinality":319404,
+                  "extra_info": "INNER\nps_partkey=p_partkey\nl_partkey=p_partkey\n",
+                  "timings": [
+                    {
+                     "annotation": "ExpressionRoot",
+                     "id": 1,
+                     "name": "#4",
+                     "timing": "NULL" ,
+                     "cycles_per_tuple": 1.321731,
+                     "sample_size": 60591,
+                     "input_size": 6001215,
+                     "extra_info": "probe_executor"
+                   },
+                   {
+                     "annotation": "ExpressionRoot",
+                     "id": 2,
+                     "name": "#4",
+                     "timing": "NULL" ,
+                     "cycles_per_tuple": 5.641432,
+                     "sample_size": 67870,
+                     "input_size": 6001215,
+                     "extra_info": "probe_executor"
+                   },
+                   {
+                     "annotation": "ExpressionRoot",
+                     "id": 3,
+                     "name": "#0",
+                     "timing": "NULL" ,
+                     "cycles_per_tuple": 8.788079,
+                     "sample_size": 151,
+                     "input_size": 10664,
+                     "extra_info": "build_executor"
+                   },
+                   {
+                     "annotation": "ExpressionRoot",
+                     "id": 4,
+                     "name": "#0",
+                     "timing": "NULL" ,
+                     "cycles_per_tuple": 17.356436,
+                     "sample_size": 101,
+                     "input_size": 10664,
+                     "extra_info": "build_executor"
+                   }
+                  ],
+                  "children": [
+                   {
+                     "name": "HASH_JOIN",
+                     "timing":1.466565,
+                     "cardinality":6001215,
+                     "extra_info": "INNER\nps_suppkey=s_suppkey\nl_suppkey=s_suppkey\n",
+                     "timings": [
+                       {
+                        "annotation": "ExpressionRoot",
+                        "id": 1,
+                        "name": "#3",
+                        "timing": "NULL" ,
+                        "cycles_per_tuple": 0.585816,
+                        "sample_size": 64452,
+                        "input_size": 6001215,
+                        "extra_info": "probe_executor"
+                      },
+                      {
+                        "annotation": "ExpressionRoot",
+                        "id": 2,
+                        "name": "#3",
+                        "timing": "NULL" ,
+                        "cycles_per_tuple": 3.271829,
+                        "sample_size": 54229,
+                        "input_size": 6001215,
+                        "extra_info": "probe_executor"
+                      },
+                      {
+                        "annotation": "ExpressionRoot",
+                        "id": 3,
+                        "name": "#0",
+                        "timing": "NULL" ,
+                        "cycles_per_tuple": 0.702148,
+                        "sample_size": 1024,
+                        "input_size": 10000,
+                        "extra_info": "build_executor"
+                      },
+                      {
+                        "annotation": "ExpressionRoot",
+                        "id": 4,
+                        "name": "#0",
+                        "timing": "NULL" ,
+                        "cycles_per_tuple": 0.682617,
+                        "sample_size": 1024,
+                        "input_size": 10000,
+                        "extra_info": "build_executor"
+                      }
+                     ],
+                     "children": [
+                      {
+                        "name": "HASH_JOIN",
+                        "timing":0.514497,
+                        "cardinality":6001215,
+                        "extra_info": "INNER\nl_orderkey=o_orderkey\n",
+                        "timings": [
+                          {
+                           "annotation": "ExpressionRoot",
+                           "id": 1,
+                           "name": "#5",
+                           "timing": "NULL" ,
+                           "cycles_per_tuple": 3.660540,
+                           "sample_size": 54457,
+                           "input_size": 6001215,
+                           "extra_info": "probe_executor"
+                         },
+                         {
+                           "annotation": "ExpressionRoot",
+                           "id": 2,
+                           "name": "#1",
+                           "timing": "NULL" ,
+                           "cycles_per_tuple": 0.315889,
+                           "sample_size": 17408,
+                           "input_size": 1500000,
+                           "extra_info": "build_executor"
+                         }
+                        ],
+                        "children": [
+                         {
+                           "name": "HASH_JOIN",
+                           "timing":1.673345,
+                           "cardinality":6001215,
+                           "extra_info": "INNER\nl_suppkey=ps_suppkey\nl_partkey=ps_partkey\n",
+                           "timings": [
+                             {
+                              "annotation": "ExpressionRoot",
+                              "id": 1,
+                              "name": "#3",
+                              "timing": "NULL" ,
+                              "cycles_per_tuple": 0.383018,
+                              "sample_size": 58368,
+                              "input_size": 6001215,
+                              "extra_info": "probe_executor"
+                            },
+                            {
+                              "annotation": "ExpressionRoot",
+                              "id": 2,
+                              "name": "#4",
+                              "timing": "NULL" ,
+                              "cycles_per_tuple": 0.294773,
+                              "sample_size": 60416,
+                              "input_size": 6001215,
+                              "extra_info": "probe_executor"
+                            },
+                            {
+                              "annotation": "ExpressionRoot",
+                              "id": 3,
+                              "name": "#1",
+                              "timing": "NULL" ,
+                              "cycles_per_tuple": 0.406390,
+                              "sample_size": 7168,
+                              "input_size": 800000,
+                              "extra_info": "build_executor"
+                            },
+                            {
+                              "annotation": "ExpressionRoot",
+                              "id": 4,
+                              "name": "#2",
+                              "timing": "NULL" ,
+                              "cycles_per_tuple": 0.237444,
+                              "sample_size": 7168,
+                              "input_size": 800000,
+                              "extra_info": "build_executor"
+                            }
+                           ],
+                           "children": [
+                            {
+                              "name": "SEQ_SCAN",
+                              "timing":0.054267,
+                              "cardinality":6001215,
+                              "extra_info": "lineitem\n[INFOSEPARATOR]\nl_extendedprice\nl_discount\nl_quantity\nl_suppkey\nl_partkey\nl_orderkey",
+                              "timings": [
+                              ],
+                              "children": [
+                              ]
+                            }
+,
+                            {
+                              "name": "SEQ_SCAN",
+                              "timing":0.007954,
+                              "cardinality":1600000,
+                              "extra_info": "partsupp\n[INFOSEPARATOR]\nps_supplycost\nps_suppkey\nps_partkey",
+                              "timings": [
+                              ],
+                              "children": [
+                              ]
+                            }
+                           ]
+                         }
+,
+                         {
+                           "name": "SEQ_SCAN",
+                           "timing":0.015810,
+                           "cardinality":3000000,
+                           "extra_info": "orders\n[INFOSEPARATOR]\no_orderdate\no_orderkey",
+                           "timings": [
+                           ],
+                           "children": [
+                           ]
+                         }
+                        ]
+                      }
+,
+                      {
+                        "name": "HASH_JOIN",
+                        "timing":0.000494,
+                        "cardinality":20000,
+                        "extra_info": "INNER\ns_nationkey=n_nationkey\n",
+                        "timings": [
+                          {
+                           "annotation": "ExpressionRoot",
+                           "id": 1,
+                           "name": "#1",
+                           "timing": "NULL" ,
+                           "cycles_per_tuple": 2.809570,
+                           "sample_size": 1024,
+                           "input_size": 10000,
+                           "extra_info": "probe_executor"
+                         },
+                         {
+                           "annotation": "ExpressionRoot",
+                           "id": 2,
+                           "name": "#1",
+                           "timing": "NULL" ,
+                           "cycles_per_tuple": 84.920000,
+                           "sample_size": 25,
+                           "input_size": 25,
+                           "extra_info": "build_executor"
+                         }
+                        ],
+                        "children": [
+                         {
+                           "name": "SEQ_SCAN",
+                           "timing":0.000098,
+                           "cardinality":20000,
+                           "extra_info": "supplier\n[INFOSEPARATOR]\ns_suppkey\ns_nationkey",
+                           "timings": [
+                           ],
+                           "children": [
+                           ]
+                         }
+,
+                         {
+                           "name": "SEQ_SCAN",
+                           "timing":0.000048,
+                           "cardinality":50,
+                           "extra_info": "nation\n[INFOSEPARATOR]\nn_name\nn_nationkey",
+                           "timings": [
+                           ],
+                           "children": [
+                           ]
+                         }
+                        ]
+                      }
+                     ]
+                   }
+,
+                   {
+                     "name": "PROJECTION",
+                     "timing":0.000210,
+                     "cardinality":21328,
+                     "extra_info": "#0\n",
+                     "timings": [
+                       {
+                        "annotation": "ExpressionRoot",
+                        "id": 1,
+                        "name": "#0",
+                        "timing": "NULL" ,
+                        "cycles_per_tuple": 4.278481,
+                        "sample_size": 158,
+                        "input_size": 10664,
+                        "extra_info": "projection"
+                      }
+                     ],
+                     "children": [
+                      {
+                        "name": "FILTER",
+                        "timing":0.018356,
+                        "cardinality":21328,
+                        "extra_info": "contains(p_name, green)",
+                        "timings": [
+                          {
+                           "annotation": "ExpressionRoot",
+                           "id": 1,
+                           "name": "contains(p_name, green)",
+                           "timing": "NULL" ,
+                           "cycles_per_tuple": 155.403809,
+                           "sample_size": 2048,
+                           "input_size": 200000,
+                           "extra_info": "executor"
+                         },
+                         {
+                           "annotation": "Function",
+                           "id": 1,
+                           "name": "contains",
+                           "timing": "NULL" ,
+                           "cycles_per_tuple": 95.906250,
+                           "sample_size": 2048,
+                           "input_size": 200000,
+                           "extra_info": ""
+                         }
+                        ],
+                        "children": [
+                         {
+                           "name": "SEQ_SCAN",
+                           "timing":0.008614,
+                           "cardinality":400000,
+                           "extra_info": "part\n[INFOSEPARATOR]\np_partkey\np_name",
+                           "timings": [
+                           ],
+                           "children": [
+                           ]
+                         }
+                        ]
+                      }
+                     ]
+                   }
+                  ]
+                }
+               ]
+             }
+            ]
+          }
+         ]
+       }
+      ]
+    }
+   ]
+}

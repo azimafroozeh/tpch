@@ -101,3 +101,29 @@
 [22](intelmac/cycles_per_tuple/htmls/22.html)
 
 
+#M1(sf=1, cylces_per_tuple)
+
+[1](m1/cycles_per_tuple/htmls/1.html)
+[2](m1/cycles_per_tuple/htmls/2.html)
+[3](m1/cycles_per_tuple/htmls/3.html)
+[4](m1/cycles_per_tuple/htmls/4.html)
+[5](m1/cycles_per_tuple/htmls/5.html)
+[6](m1/cycles_per_tuple/htmls/6.html)
+[7](m1/cycles_per_tuple/htmls/7.html)
+[8](m1/cycles_per_tuple/htmls/8.html)
+[9](m1/cycles_per_tuple/htmls/9.html)
+[10](m1/cycles_per_tuple/htmls/10.html)
+[11](m1/cycles_per_tuple/htmls/11.html)
+[12](m1/cycles_per_tuple/htmls/12.html)
+[13](m1/cycles_per_tuple/htmls/13.html)
+[14](m1/cycles_per_tuple/htmls/14.html)
+[15](m1/cycles_per_tuple/htmls/15.html)
+[16](m1/cycles_per_tuple/htmls/16.html)
+[17](m1/cycles_per_tuple/htmls/17.html)
+[18](m1/cycles_per_tuple/htmls/18.html)
+[19](m1/cycles_per_tuple/htmls/19.html)
+[20](m1/cycles_per_tuple/htmls/20.html)
+[21](m1/cycles_per_tuple/htmls/21.html)
+[22](m1/cycles_per_tuple/htmls/22.html)
+
+
