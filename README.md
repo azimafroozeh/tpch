@@ -1,2 +1,2 @@
-# tpch
-TPCH-Visualization 
+# TPCH-Visualization 
+[TPCH-Visualization ](https://azimafroozeh.github.io/tpch/)
